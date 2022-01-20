@@ -8,6 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
-app.use(restaurantRouter)
+app.use('/api/', restaurantRouter)
 
 export default app;
