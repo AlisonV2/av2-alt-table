@@ -1,0 +1,23 @@
+{
+  "name": "av2-alt-table-docs",
+  "version": "1.0.0",
+  "description": "Documentation for the Alt-Table API",
+  "main": "index.js",
+  "scripts": {
+    "babel-node": "babel-node src/index.js",
+    "dev": "nodemon --exec npm run babel-node"
+  },
+  "author": "Alison Vandromme",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "swagger-ui-express": "^4.3.0"
+  }
+}
