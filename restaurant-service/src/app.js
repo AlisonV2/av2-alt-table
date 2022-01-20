@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import './database/menuDb';
+import './database/restaurantDb';
 import { restaurantRouter } from './router/restaurantRouter'
 
 const app = express();
@@ -8,6 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
-app.use('/api/', restaurantRouter)
+app.use('/api', restaurantRouter)
 
 export default app;
