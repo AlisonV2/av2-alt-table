@@ -21,3 +21,12 @@ npm run dev
 ```
 
 The documentation can be found on localhost:8001
+
+## Step 2: Menu Service
+
+Routes: 
+- get('/') => Get Menu
+- get('/dish') => Get all dishes
+- post('/dish') => Create a new dish
+- put('/dish/:id') => Update a dish
+- get('/dish/:id') => Get dish by id
