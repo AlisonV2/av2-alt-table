@@ -1,5 +1,4 @@
 import SeatingPlan from '../models/SeatingPlanModel';
-import getShiftId from '../helpers/getShiftId';
 import createEvent from '../helpers/createEvent';
 
 const createSeatingPlan = async (req, res) => {
@@ -57,6 +56,10 @@ const updateSeatingPlan = async (req, res) => {
           });
         }
       });
+    } else {
+      res.status(404).json({
+        message: 'Seating plan not found',
+      });
     }
   } catch (err) {
     res.status(400).json({
@@ -67,9 +70,8 @@ const updateSeatingPlan = async (req, res) => {
 };
 
 const getSeatingPlanById = async (req, res) => {
-  const shift_id = getShiftId(req.body.shift);
   try {
-    const seatingPlan = await SeatingPlan.find({ shift_id: shift_id });
+    const seatingPlan = await SeatingPlan.findById(req.params.id);
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',
