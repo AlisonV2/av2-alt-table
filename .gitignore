@@ -4,9 +4,9 @@
 /docs/.env
 /docs/package-lock.json
 
-/gateway-service/node_modules
-/gateway-service/.env
-/gateway-service/package-lock.json
+/restaurant-service/node_modules
+/restaurant-service/.env
+/restaurant-service/package-lock.json
 
 /menu-service/node_modules
 /menu-service/.env
@@ -19,3 +19,7 @@
 /shift-service/node_modules
 /shift-service/.env
 /shift-service/package-lock.json
+
+/event-service/node_modules
+/event-service/.env
+/event-service/package-lock.json
