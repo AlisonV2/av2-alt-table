@@ -25,5 +25,8 @@
     "mongoose": "^5.3.16",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.25.0"
   }
 }

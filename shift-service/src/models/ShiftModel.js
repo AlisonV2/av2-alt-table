@@ -9,7 +9,7 @@ const shiftSchema = new Schema({
     unique: true,
   },
   started_at: {
-    type: Date,
+    type: String,
     require: true,
   }
 });
