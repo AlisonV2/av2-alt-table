@@ -86,9 +86,6 @@ const getSeatingPlanById = async (req, res) => {
     res.status(404).json({
       message: 'No SeatingPlan found',
     });
-    res.status(400).json({
-      message: 'Error fetching SeatingPlan',
-    });
   }
 };
 

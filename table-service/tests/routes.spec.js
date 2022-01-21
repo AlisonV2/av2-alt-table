@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../src/app';
-import { setupDb, table4, seatingPlan1, seatingPlan2 } from './fixtures/tableDb';
+import { setupDb, table4, seatingPlan1 } from './fixtures/tableDb';
 
 beforeEach(setupDb);
 
@@ -45,4 +45,9 @@ describe('Testing SeatingPlan routes', () => {
     expect(response.status).toBe(200);
     expect(response.body.seatingPlan.shift_id).toBe(seatingPlan1.shift_id);
   });
+
+  test('Should return an error when not found', async () => {
+    const response = await request(app).get(`/seating-plan/1234`);
+    expect(response.status).toBe(404);
+  })
 });
