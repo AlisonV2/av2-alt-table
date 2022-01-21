@@ -12,6 +12,6 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: 'main'
-          pr_title: '[${{ GITHUB_REF_NAME }}] Pulling ${{ github.ref }} into main'
+          pr_title: 'Pulling ${{ github.ref }} into main'
           pr_body: 'Pulling ${{ github.ref }} into main -- ${{ github.actor }}'
           github_token: ${{ secrets.GITHUB_TOKEN }}
