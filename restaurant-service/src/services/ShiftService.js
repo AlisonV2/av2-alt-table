@@ -16,8 +16,7 @@ const createShift = async (req, res) => {
   }
 
   seatingPlan = event;
-  console.log(seatingPlan)
-
+  
   try {
     const { data } = await axios.post(
       `${process.env.SHIFT_SERVICE_URL}`,

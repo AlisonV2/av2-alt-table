@@ -2,7 +2,6 @@ import Shift from '../models/ShiftModel';
 import createEvent from '../helpers/createEvent';
 
 const createShift = async (req, res) => {
-  console.log(req.body);
   try {
     const shift = new Shift({
       shift_id: req.body.shift_id,

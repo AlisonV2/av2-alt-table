@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const createEvent = async (eventName, shiftId, eventData) => {
+  let event;
   try {
     const { data } = await axios.post(
       `${process.env.EVENT_SERVICE_URL}/events`,
@@ -10,10 +11,11 @@ const createEvent = async (eventName, shiftId, eventData) => {
         content: eventData,
       }
     );
-    return data;
+    event = data;
   } catch (err) {
-    return new Error(err.message);
+    event = err.message;
   }
+  return event;
 };
 
 export { createEvent };

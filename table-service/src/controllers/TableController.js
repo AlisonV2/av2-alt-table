@@ -15,7 +15,6 @@ const getTables = async (req, res) => {
 };
 
 const createTables = (req, res) => {
-  console.log(req.body)
   try {
     Table.insertMany(req.body, (err, tables) => {
       if (err) {

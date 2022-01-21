@@ -4,6 +4,7 @@ import axios from 'axios';
 dotenv.config();
 
 const getEvent = async (eventName, shiftId) => {
+  let event;
   try {
     const { data } = await axios.post(
       `${process.env.EVENT_SERVICE_URL}/event`,
@@ -12,10 +13,11 @@ const getEvent = async (eventName, shiftId) => {
         shift_id: shiftId,
       }
     );
-    return data;
+    event = data;
   } catch (err) {
-    return new Error(err.message);
+    event = err.message;
   }
+  return event;
 };
 
 export default getEvent;
