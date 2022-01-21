@@ -2,11 +2,10 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const seatingPlanSchema = new Schema({
+const restaurantSchema = new Schema({
     shift_id: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     tables: {
         type: Array,
@@ -14,6 +13,6 @@ const seatingPlanSchema = new Schema({
     }
 });
 
-const SeatingPlan = mongoose.model('SeatingPlan', seatingPlanSchema);
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 
-export default SeatingPlan;
+export default Restaurant;

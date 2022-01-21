@@ -1,25 +1,84 @@
 import dotenv from 'dotenv';
+import axios from 'axios';
 
 dotenv.config();
 
 const getMenu = async (req, res) => {
-  res.redirect(process.env.MENU_SERVICE_URL);
+  try {
+    const { data } = await axios.get(process.env.MENU_SERVICE_URL);
+    res.status(200).json({
+      message: 'Dishes fetched successfully',
+      dishes: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'No menu found',
+    });
+  }
 };
 
 const getDishes = async (req, res) => {
-  res.redirect(`${process.env.MENU_SERVICE_URL}dish`);
+  try {
+    const { data } = await axios.get(`${process.env.MENU_SERVICE_URL}/dish`);
+    res.status(200).json({
+      message: 'Dishes fetched successfully',
+      dishes: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'No dishes found',
+    });
+  }
 };
 
 const getDishById = async (req, res) => {
-  res.redirect(`${process.env.MENU_SERVICE_URL}dish/${req.params.id}`);
+  try {
+    const { data } = await axios.get(
+      `${process.env.MENU_SERVICE_URL}/dish/${req.params.id}`
+    );
+    res.status(200).json({
+      message: 'Dish fetched successfully',
+      dish: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'No dish found',
+    });
+  }
 };
 
 const createDish = async (req, res) => {
-  res.redirect(307, `${process.env.MENU_SERVICE_URL}dish`);
+  try {
+    const { data } = await axios.post(
+      `${process.env.MENU_SERVICE_URL}/dish`,
+      req.body
+    );
+    res.status(200).json({
+      message: 'Dish created successfully',
+      dish: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Dish creation failed',
+    });
+  }
 };
 
 const updateDishQuantity = async (req, res) => {
-  res.redirect(307, `${process.env.MENU_SERVICE_URL}dish/${req.params.id}`);
+  try {
+    const { data } = await axios.put(
+      `${process.env.MENU_SERVICE_URL}/dish/${req.params.id}`,
+      req.body
+    );
+    res.status(200).json({
+      message: 'Dish updated successfully',
+      dish: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Dish update failed',
+    });
+  }
 };
 
 export { getMenu, getDishes, getDishById, createDish, updateDishQuantity };
