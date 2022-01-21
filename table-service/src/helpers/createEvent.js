@@ -3,6 +3,7 @@ import axios from 'axios';
 dotenv.config();
 
 const createEvent = (eventName, plan) => {
+  let event;
   axios
     .post(`${process.env.EVENT_SERVICE_URL}/events`, {
       event_name: eventName,
@@ -10,11 +11,12 @@ const createEvent = (eventName, plan) => {
       content: plan,
     })
     .then((response) => {
-      console.log(response);
+      event = response;
     })
     .catch((error) => {
-      console.log(error);
+      event = error.message;
     });
+  return event;
 };
 
 export default createEvent;
