@@ -1,22 +1,18 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
-import getEvent from '../events/getEvent';
 
 dotenv.config();
 
 const createShift = async (req, res) => {
-  let seatingPlan;
-  const { event } = await getEvent('SEATING_PLAN_CREATED', req.body.shift_id);
-
-  if (!event.length) {
-    res.status(400).json({
-      error: 'No seating plan created',
+  const { seatingPlan } = await axios.get(
+    `${process.env.TABLE_SERVICE_URL}/seating-plan/${req.body.shift_id}`
+  );
+  if (!seatingPlan) {
+    return res.status(404).send({
+      message: 'You must create a seating plan first',
     });
-    return;
   }
 
-  seatingPlan = event;
-  
   try {
     const { data } = await axios.post(
       `${process.env.SHIFT_SERVICE_URL}`,

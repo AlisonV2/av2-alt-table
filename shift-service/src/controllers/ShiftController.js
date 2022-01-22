@@ -1,5 +1,4 @@
 import Shift from '../models/ShiftModel';
-import createEvent from '../helpers/createEvent';
 
 const createShift = async (req, res) => {
   try {
@@ -8,10 +7,9 @@ const createShift = async (req, res) => {
       started_at: req.body.started_at,
     });
     await shift.save();
-    createEvent('SHIFT_STARTED', shift);
-    res.status(200).json({
+    res.status(201).json({
       message: 'Shift created successfully',
-      data: shift,
+      shift: shift,
     });
   } catch (err) {
     res.status(400).json({
@@ -21,4 +19,24 @@ const createShift = async (req, res) => {
   }
 };
 
-export { createShift };
+const getShiftByShiftId = async (req, res) => {
+  try {
+    const shift = await Shift.findOne({ shift_id: req.params.shift_id });
+    if (!shift) {
+      return res.status(404).json({
+        message: 'Shift not found',
+      });
+    }
+    res.status(200).json({
+      message: 'Shift found',
+      shift: shift,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error getting shift',
+      error: err.message,
+    });
+  }
+}
+
+export { createShift, getShiftByShiftId };

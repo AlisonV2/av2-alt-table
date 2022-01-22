@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.29% </span>
+                <span class="strong">65.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>59/89</span>
+                <span class='fraction'>58/88</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.29% </span>
+                <span class="strong">65.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>59/89</span>
+                <span class='fraction'>58/88</span>
             </div>
         
             
@@ -151,8 +151,7 @@
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -185,7 +184,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -223,6 +221,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -233,11 +236,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -274,14 +272,13 @@ const createSeatingPlan = async (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >        err.message || 'Some error occurred while creating the SeatingPlan.',</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-  
 };
 &nbsp;
 const updateSeatingPlan = async (req, res) =&gt; {
   try {
     const tables = req.body.tables;
 &nbsp;
-    const seatingPlan = await SeatingPlan.findById(req.params.id)
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       seatingPlan.tables = tables;
       seatingPlan.save((err, updatedSeatingPlan) =&gt; {
@@ -309,27 +306,27 @@ const updateSeatingPlan = async (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  }</span>
 };
 &nbsp;
-const getSeatingPlanById = async (req, res) =&gt; {
+const getSeatingPlanByShiftId = async (req, res) =&gt; {
   try {
-    const seatingPlan = await SeatingPlan.findById(req.params.id);
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',
         seatingPlan: seatingPlan,
       });
-    }<span class="branch-0 cbranch-no" title="branch not covered" > else {</span>
-<span class="cstat-no" title="statement not covered" >      res.status(400).json({</span>
-<span class="cstat-no" title="statement not covered" >        message: 'Error fetching SeatingPlan',</span>
-<span class="cstat-no" title="statement not covered" >      });</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-  } catch (err) {
-    res.status(404).json({
-      message: 'No SeatingPlan found',
-    });
-  }
+    } else {
+      res.status(400).json({
+        message: 'Error fetching SeatingPlan',
+      });
+    }
+  } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
+<span class="cstat-no" title="statement not covered" >    res.status(404).json({</span>
+<span class="cstat-no" title="statement not covered" >      message: 'No SeatingPlan found',</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 };
 &nbsp;
-export { createSeatingPlan, updateSeatingPlan, getSeatingPlanById };
+export { createSeatingPlan, updateSeatingPlan, getSeatingPlanByShiftId };
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -337,7 +334,7 @@ export { createSeatingPlan, updateSeatingPlan, getSeatingPlanById };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Jan 22 2022 09:58:29 GMT+0100 (Central European Standard Time)
+                at Sat Jan 22 2022 10:07:37 GMT+0100 (Central European Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

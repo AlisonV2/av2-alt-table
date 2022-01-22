@@ -1,8 +1,9 @@
 import express from 'express';
-import { createShift } from '../controllers/ShiftController';
+import { createShift, getShiftByShiftId } from '../controllers/ShiftController';
 
 const router = express.Router();
 
-router.post('/', createShift)
+router.post('/', createShift);
+router.get('/:shift_id', getShiftByShiftId);
 
 export { router as shiftRouter };

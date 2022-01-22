@@ -31,14 +31,13 @@ const createSeatingPlan = async (req, res) => {
         err.message || 'Some error occurred while creating the SeatingPlan.',
     });
   }
-  
 };
 
 const updateSeatingPlan = async (req, res) => {
   try {
     const tables = req.body.tables;
 
-    const seatingPlan = await SeatingPlan.findById(req.params.id)
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       seatingPlan.tables = tables;
       seatingPlan.save((err, updatedSeatingPlan) => {
@@ -66,9 +65,9 @@ const updateSeatingPlan = async (req, res) => {
   }
 };
 
-const getSeatingPlanById = async (req, res) => {
+const getSeatingPlanByShiftId = async (req, res) => {
   try {
-    const seatingPlan = await SeatingPlan.findById(req.params.id);
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',
@@ -86,4 +85,4 @@ const getSeatingPlanById = async (req, res) => {
   }
 };
 
-export { createSeatingPlan, updateSeatingPlan, getSeatingPlanById };
+export { createSeatingPlan, updateSeatingPlan, getSeatingPlanByShiftId };

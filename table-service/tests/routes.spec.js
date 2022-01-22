@@ -32,7 +32,7 @@ describe('Testing SeatingPlan routes', () => {
 
   test('Should update a Seating plan', async () => {
     const response = await request(app)
-      .put(`/seating-plan/${seatingPlan1._id}`)
+      .put(`/seating-plan/${seatingPlan1.shift_id}`)
       .send({
         shift_id: '25-11-1991-dinner',
         tables: [table4],
@@ -41,13 +41,13 @@ describe('Testing SeatingPlan routes', () => {
   });
 
   test('Should get seating plan by id', async () => {
-    const response = await request(app).get(`/seating-plan/${seatingPlan1._id}`);
+    const response = await request(app).get(`/seating-plan/${seatingPlan1.shift_id}`);
     expect(response.status).toBe(200);
     expect(response.body.seatingPlan.shift_id).toBe(seatingPlan1.shift_id);
   });
 
   test('Should return an error when not found', async () => {
     const response = await request(app).get(`/seating-plan/1234`);
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
   })
 });
