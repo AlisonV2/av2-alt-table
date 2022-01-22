@@ -23,7 +23,7 @@ const tableSchema = new Schema({
         type: Array,
         default: [],
     },
-    occupation: {
+    customers: {
         type: Number,
         default: 0,
         min: 0
