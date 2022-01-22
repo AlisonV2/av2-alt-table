@@ -4,7 +4,7 @@ import express from 'express';
 import {
   getMenu,
   getDishes,
-  getDishById,
+  getDishByName,
   createDish,
   updateDishQuantity,
 } from '../services/KitchenService';
@@ -21,14 +21,14 @@ router.use('/', swaggerUi.serve);
 
 router.get('/menu', getMenu);
 router.get('/dish', getDishes);
-router.get('/dish/:id', getDishById);
+router.get('/dish/:name', getDishByName);
 router.post('/dish', createDish);
-router.put('/dish/:id', updateDishQuantity);
+router.put('/dish/:name', updateDishQuantity);
 router.post('/shift', createShift);
+router.put('/tables', installCustomers);
 router.post('/seating-plan', createSeatingPlan);
 router.put('/seating-plan/:shift_id', updateSeatingPlan);
 router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);
-router.put('/tables', installCustomers);
 router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 export { router as restaurantRouter };

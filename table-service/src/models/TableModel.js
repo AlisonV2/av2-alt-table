@@ -17,7 +17,7 @@ const tableSchema = new Schema({
     status: {
         type: String,
         default: 'available',
-        enum: ['available', 'occupied', 'reserved', 'out-of-service']
+        enum: ['available', 'occupied', 'reserved']
     },
     orders: {
         type: Array,

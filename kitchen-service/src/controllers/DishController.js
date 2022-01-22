@@ -49,9 +49,8 @@ const createDish = (req, res) => {
 };
 
 const updateDishQuantity = async (req, res) => {
-  const dishId = req.params.id;
   try {
-    const dish = await Dish.findById(dishId);
+    const dish = await Dish.findOne({ name: req.params.name });
     if (dish) {
       dish.quantity = req.body.quantity;
       dish.save((err, updatedDish) => {
@@ -75,9 +74,9 @@ const updateDishQuantity = async (req, res) => {
   }
 };
 
-const getDishById = async (req, res) => {
+const getDishByName = async (req, res) => {
   try {
-    const dish = await Dish.findById(req.params.id);
+    const dish = await Dish.findOne({ name: req.params.name });
     if (dish) {
       res.status(200).json({
         message: 'Dish fetched successfully',
@@ -98,4 +97,4 @@ const getDishById = async (req, res) => {
   }
 };
 
-export { createDish, updateDishQuantity, getDishById, getDishes };
+export { createDish, updateDishQuantity, getDishByName, getDishes };

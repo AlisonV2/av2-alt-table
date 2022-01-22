@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/tables', getTables);
 router.post('/tables', createTables);
-router.put('/tables/:table_number', installCustomers);
+router.put('/tables', installCustomers);
 router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);
 router.post('/seating-plan', createSeatingPlan);
 router.put('/seating-plan/:shift_id', updateSeatingPlan);

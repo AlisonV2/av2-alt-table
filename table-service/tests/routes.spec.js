@@ -18,11 +18,21 @@ describe('Testing Table routes', () => {
   });
 
   test('Table status should be occupied', async () => {
-    const response = await request(app).put(`/tables/1`).send({
+    const response = await request(app).put(`/tables`).send({
+      table_number: 1,
       customers: 2,
     });
     expect(response.status).toBe(200);
     expect(response.body.table.status).toBe('occupied');
+  });
+  test('Should return an error as customers are > seats', async () => {
+    await request(app)
+      .put(`/tables`)
+      .send({
+        table_number: 1,
+        customers: 6,
+      })
+      .expect(400);
   });
 });
 
@@ -30,9 +40,9 @@ describe('Testing SeatingPlan routes', () => {
   test('Should create a Seating Plan', async () => {
     const response = await request(app)
       .post('/seating-plan')
-      .send({ 
+      .send({
         shift_id: 'djshfqdsjhf',
-        tables: [table4]
+        tables: [table4],
       })
       .expect(201);
     expect(response.body.seatingPlan).toHaveProperty('shift_id');
@@ -49,7 +59,9 @@ describe('Testing SeatingPlan routes', () => {
   });
 
   test('Should get seating plan by id', async () => {
-    const response = await request(app).get(`/seating-plan/${seatingPlan1.shift_id}`);
+    const response = await request(app).get(
+      `/seating-plan/${seatingPlan1.shift_id}`
+    );
     expect(response.status).toBe(200);
     expect(response.body.seatingPlan.shift_id).toBe(seatingPlan1.shift_id);
   });
@@ -57,5 +69,5 @@ describe('Testing SeatingPlan routes', () => {
   test('Should return an error when not found', async () => {
     const response = await request(app).get(`/seating-plan/1234`);
     expect(response.status).toBe(400);
-  })
+  });
 });

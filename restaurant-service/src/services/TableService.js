@@ -88,7 +88,7 @@ const installCustomers = async (req, res) => {
 
   try {
     const { data } = await axios.put(
-      `${process.env.TABLE_SERVICE_URL}/tables/${req.params.table_number}`,
+      `${process.env.TABLE_SERVICE_URL}/tables`,
       req.body
     );
     res.status(200).json({

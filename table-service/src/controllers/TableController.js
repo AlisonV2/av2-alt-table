@@ -38,7 +38,7 @@ const createTables = (req, res) => {
 const installCustomers = async (req, res) => {
   try {
     const table = await Table.findOne({
-      table_number: req.params.table_number,
+      table_number: req.body.table_number,
     });
     if (table.status !== 'available') {
       res.status(400).json({

@@ -24,11 +24,11 @@ describe('Testing DishRoutes', () => {
 
   test('Should update dish quantity', async () => {
     await request(app)
-      .put(`/dish/${dish3._id}`)
+      .put(`/dish/${dish3.name}`)
       .send({ quantity: 10 })
       .expect(200);
 
-    const response = await request(app).get(`/dish/${dish3._id}`).expect(200);
+    const response = await request(app).get(`/dish/${dish3.name}`).expect(200);
     expect(response.body.dish.quantity).toBe(10);
   });
 
