@@ -1,13 +1,13 @@
 import express from 'express';
 import { getTables, createTables } from '../controllers/TableController';
-import { getSeatingPlanById, createSeatingPlan, updateSeatingPlan } from '../controllers/SeatingPlanController';
+import { getSeatingPlanByShiftId, createSeatingPlan, updateSeatingPlan } from '../controllers/SeatingPlanController';
 
 const router = express.Router();
 
 router.get('/tables', getTables);
 router.post('/tables', createTables);
-router.get('/seating-plan/:id', getSeatingPlanById);
+router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);
 router.post('/seating-plan', createSeatingPlan);
-router.put('/seating-plan/:id', updateSeatingPlan);
+router.put('/seating-plan/:shift_id', updateSeatingPlan);
 
 export { router as tableRouter };

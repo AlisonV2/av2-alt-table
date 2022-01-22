@@ -1,5 +1,4 @@
 import SeatingPlan from '../models/SeatingPlanModel';
-import createEvent from '../helpers/createEvent';
 
 const createSeatingPlan = async (req, res) => {
   try {
@@ -16,7 +15,6 @@ const createSeatingPlan = async (req, res) => {
             'Some error occurred while creating the SeatingPlan.',
         });
       } else {
-        createEvent('SEATING_PLAN_CREATED', plan);
         res.status(201).send({
           message: 'SeatingPlan created successfully',
           seatingPlan: plan,
@@ -33,14 +31,13 @@ const createSeatingPlan = async (req, res) => {
         err.message || 'Some error occurred while creating the SeatingPlan.',
     });
   }
-  
 };
 
 const updateSeatingPlan = async (req, res) => {
   try {
     const tables = req.body.tables;
 
-    const seatingPlan = await SeatingPlan.findById(req.params.id)
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       seatingPlan.tables = tables;
       seatingPlan.save((err, updatedSeatingPlan) => {
@@ -49,7 +46,6 @@ const updateSeatingPlan = async (req, res) => {
             message: 'Error updating seatingPlan',
           });
         } else {
-          createEvent('SEATING_PLAN_UPDATED', updatedSeatingPlan);
           res.status(200).json({
             message: 'SeatingPlan updated successfully',
             seatingPlan: updatedSeatingPlan,
@@ -69,9 +65,9 @@ const updateSeatingPlan = async (req, res) => {
   }
 };
 
-const getSeatingPlanById = async (req, res) => {
+const getSeatingPlanByShiftId = async (req, res) => {
   try {
-    const seatingPlan = await SeatingPlan.findById(req.params.id);
+    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',
@@ -86,10 +82,7 @@ const getSeatingPlanById = async (req, res) => {
     res.status(404).json({
       message: 'No SeatingPlan found',
     });
-    res.status(400).json({
-      message: 'Error fetching SeatingPlan',
-    });
   }
 };
 
-export { createSeatingPlan, updateSeatingPlan, getSeatingPlanById };
+export { createSeatingPlan, updateSeatingPlan, getSeatingPlanByShiftId };

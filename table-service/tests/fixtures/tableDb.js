@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Table from '../../src/models/TableModel';
+import SeatingPlan from '../../src/models/SeatingPlanModel';
 
 const id1 = new mongoose.Types.ObjectId();
 const id2 = new mongoose.Types.ObjectId();
@@ -41,9 +42,22 @@ const table4 =
   customers: 0
 }
 
+const seatingPlan1 = {
+  _id: id1,
+  shift_id: '1dsfqfqsdfzs',
+  tables: [table1, table2],
+}
+
+const seatingPlan2 = {
+  shift_id: '1dsfqfqsdfzs',
+  tables: [table3, table4],
+}
+
 const setupDb = async () => {
   await Table.deleteMany();
   await Table.insertMany([table1, table2, table3]);
+  await SeatingPlan.deleteMany();
+  await SeatingPlan.insertMany([seatingPlan1]);
 };
 
-export { setupDb, table3, table4 };
+export { setupDb, table3, table4, seatingPlan1, seatingPlan2 };

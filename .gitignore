@@ -8,9 +8,9 @@
 /restaurant-service/.env
 /restaurant-service/package-lock.json
 
-/menu-service/node_modules
-/menu-service/.env
-/menu-service/package-lock.json
+/kitchen-service/node_modules
+/kitchen-service/.env
+/kitchen-service/package-lock.json
 
 /table-service/node_modules
 /table-service/.env
