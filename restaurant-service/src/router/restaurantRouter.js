@@ -13,6 +13,7 @@ import {
   createSeatingPlan,
   updateSeatingPlan,
   getSeatingPlanByShiftId,
+  installCustomers
 } from '../services/TableService';
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.post('/shift', createShift);
 router.post('/seating-plan', createSeatingPlan);
 router.put('/seating-plan/:shift_id', updateSeatingPlan);
 router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);
+router.put('/tables', installCustomers);
 router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 export { router as restaurantRouter };

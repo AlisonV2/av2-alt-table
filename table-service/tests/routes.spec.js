@@ -16,6 +16,14 @@ describe('Testing Table routes', () => {
     expect(response.status).toBe(200);
     expect(response.body.tables.length).toBe(1);
   });
+
+  test('Table status should be occupied', async () => {
+    const response = await request(app).put(`/tables/1`).send({
+      customers: 2,
+    });
+    expect(response.status).toBe(200);
+    expect(response.body.table.status).toBe('occupied');
+  });
 });
 
 describe('Testing SeatingPlan routes', () => {

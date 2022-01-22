@@ -11,7 +11,6 @@ const table1 = {
   table_number: 1,
   seats: 4,
   status: 'available',
-  orders: [],
   customers: 0,
 };
 
@@ -20,7 +19,6 @@ const table2 = {
   table_number: 2,
   seats: 6,
   status: 'available',
-  orders: [],
   customers: 0,
 };
 
@@ -29,7 +27,6 @@ const table3 = {
   table_number: 3,
   seats: 8,
   status: 'available',
-  orders: [],
   customers: 0,
 };
 
@@ -38,7 +35,6 @@ const table4 =
   table_number: 4,
   seats: 2,
   status: 'available',
-  orders: [],
   customers: 0
 }
 

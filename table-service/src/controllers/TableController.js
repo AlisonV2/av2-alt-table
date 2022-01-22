@@ -35,5 +35,44 @@ const createTables = (req, res) => {
   }
 };
 
+const installCustomers = async (req, res) => {
+  try {
+    const table = await Table.findOne({
+      table_number: req.params.table_number,
+    });
+    if (table.status !== 'available') {
+      res.status(400).json({
+        message: 'Table is not available',
+      });
+      return;
+    }
 
-export { getTables, createTables };
+    if (table.seats < req.body.customers) {
+      res.status(400).json({
+        message: 'Table does not have enough seats',
+      });
+      return;
+    }
+
+    table.status = 'occupied';
+    table.customers = req.body.customers;
+    table.save((err, newTable) => {
+      if (err) {
+        res.status(400).json({
+          message: 'Error installing customers',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Table installed successfully',
+          table: newTable,
+        });
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error installing customers',
+    });
+  }
+};
+
+export { getTables, createTables, installCustomers };
