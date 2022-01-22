@@ -38,7 +38,7 @@ const createTables = (req, res) => {
 const installCustomers = async (req, res) => {
   try {
     const table = await Table.findOne({
-      table_number: req.params.table_number,
+      table_number: req.body.table_number,
     });
     if (table.status !== 'available') {
       res.status(400).json({
@@ -75,4 +75,51 @@ const installCustomers = async (req, res) => {
   }
 };
 
-export { getTables, createTables, installCustomers };
+const updateCurrentBill = async (req, res) => {
+  try {
+    const table = await Table.findOne({
+      table_number: req.body.table_number,
+    });
+    table.current_bill += req.body.bill;
+    table.save((err, newTable) => {
+      if (err) {
+        res.status(400).json({
+          message: 'Error updating current bill',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Current bill updated successfully',
+          table: newTable,
+        });
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error updating current bill',
+    });
+  }
+};
+
+const getTableByNumber = async (req, res) => {
+  try {
+    const table = await Table.findOne({
+      table_number: req.params.table_number,
+    });
+    if (table) {
+      res.status(200).json({
+        message: 'Table fetched successfully',
+        table: table,
+      });
+    } else {
+      res.status(400).json({
+        message: 'Table not found',
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error fetching table',
+    });
+  }
+}
+
+export { getTables, createTables, installCustomers, updateCurrentBill, getTableByNumber };

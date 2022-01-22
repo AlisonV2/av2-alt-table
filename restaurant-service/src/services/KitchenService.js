@@ -25,10 +25,10 @@ const getDishes = async (req, res) => {
   }
 };
 
-const getDishById = async (req, res) => {
+const getDishByName = async (req, res) => {
   try {
     const { data } = await axios.get(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.id}`
+      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`
     );
     res.status(200).json(data);
   } catch (err) {
@@ -55,7 +55,7 @@ const createDish = async (req, res) => {
 const updateDishQuantity = async (req, res) => {
   try {
     const { data } = await axios.put(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.id}`,
+      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`,
       req.body
     );
     res.status(200).json({
@@ -69,4 +69,4 @@ const updateDishQuantity = async (req, res) => {
   }
 };
 
-export { getMenu, getDishes, getDishById, createDish, updateDishQuantity };
+export { getMenu, getDishes, getDishByName, createDish, updateDishQuantity };

@@ -17,16 +17,16 @@ const tableSchema = new Schema({
     status: {
         type: String,
         default: 'available',
-        enum: ['available', 'occupied', 'reserved', 'out-of-service']
-    },
-    orders: {
-        type: Array,
-        default: [],
+        enum: ['available', 'occupied', 'reserved']
     },
     customers: {
         type: Number,
         default: 0,
         min: 0
+    },
+    current_bill: {
+        type: Number,
+        default: 0,
     }
 });
 

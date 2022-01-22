@@ -19,33 +19,36 @@
   ],
   "tags": [
     {
-      "name": "menu",
-      "description": "Menu description"
+      "name": "kitchen",
+      "description": "Kitchen service: includes dish and menu endpoints"
     },
     {
-      "name": "dish",
-      "description": "Dishes description"
-    },
-    {
-      "name": "seating-plan",
-      "description": "Seating Plan description"
+      "name": "table",
+      "description": "Table service: includes tables, seating-plan and order endpoints"
     },
     {
       "name": "shift",
-      "description": "Shift description"
+      "description": "Shift service: includes shift endpoints"
     }
   ],
   "paths": {
     "/menu": {
       "get": {
-        "tags": [
-          "menu"
-        ],
+        "tags": ["kitchen"],
         "summary": "Get the current menu",
         "responses": {
           "200": {
             "description": "Array of dishes",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Dish"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "An error occured while retrieving dishes",
@@ -61,9 +64,7 @@
     },
     "/dish": {
       "get": {
-        "tags": [
-          "dish"
-        ],
+        "tags": ["kitchen"],
         "summary": "Get all the dishes",
         "description": "Returns an array of dishes",
         "responses": {
@@ -72,10 +73,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Dish"
-                  }
+                  "$ref": "#/components/schemas/Dish"
                 }
               }
             }
@@ -87,53 +85,43 @@
         }
       },
       "post": {
-        "tags": [
-          "dish"
-        ],
+        "tags": ["kitchen"],
         "summary": "Create a new dish",
-        "parameters": [
-          {
-            "name": "dish",
-            "in": "query",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "object"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Create name of a dish"
-                  }
-                }
+                "$ref": "#/components/schemas/Dish"
               }
             }
           }
         },
         "responses": {
-          "405": {
-            "description": "Invalid input",
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dish"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while creating dish",
             "content": {}
           }
         }
       }
     },
-    "/dish/{id}": {
+    "/dish/{name}": {
       "get": {
-        "tags": [
-          "dish"
-        ],
-        "summary": "Get a specific dish",
+        "tags": ["kitchen"],
+        "summary": "Get a specific dish by its name",
         "description": "Returns a dish object",
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "required": true,
             "schema": {
@@ -147,10 +135,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Dish"
-                  }
+                  "$ref": "#/components/schemas/Dish"
                 }
               }
             }
@@ -166,14 +151,12 @@
         }
       },
       "put": {
-        "tags": [
-          "dish"
-        ],
-        "summary": "Updates a dish",
+        "tags": ["kitchen"],
+        "summary": "Updates a dish by its name",
         "description": "Returns the newly updated dish",
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "required": true,
             "schema": {
@@ -195,10 +178,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "items": {
-                    "$ref": "#/components/schemas/Dish"
-                  }
+                  "$ref": "#/components/schemas/Dish"
                 }
               }
             }
@@ -216,31 +196,13 @@
     },
     "/seating-plan": {
       "post": {
-        "tags": [
-          "seating-plan"
-        ],
+        "tags": ["table"],
         "summary": "Create a new seating plan",
-        "parameters": [
-          {
-            "name": "dish",
-            "in": "query",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "object"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Create name of a dish"
-                  }
-                }
+                "$ref": "#/components/schemas/SeatingPlan"
               }
             }
           }
@@ -253,16 +215,14 @@
         }
       }
     },
-    "/seating-plan/{id}": {
+    "/seating-plan/{shift_id}": {
       "get": {
-        "tags": [
-          "seating-plan"
-        ],
-        "summary": "Updates a seating-plan",
+        "tags": ["table"],
+        "summary": "Gets a seating plan by its shift_id",
         "description": "Returns the newly updated seating plan",
         "parameters": [
           {
-            "name": "id",
+            "name": "shift_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -276,10 +236,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SeatingPlan"
-                  }
+                  "$ref": "#/components/schemas/SeatingPlan"
                 }
               }
             }
@@ -291,14 +248,12 @@
         }
       },
       "put": {
-        "tags": [
-          "seating-plan"
-        ],
-        "summary": "Updates a seating-plan",
+        "tags": ["table"],
+        "summary": "Updates a seating-plan by it's shift_id",
         "description": "Returns the newly updated seating plan",
         "parameters": [
           {
-            "name": "id",
+            "name": "shift_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -306,16 +261,22 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SeatingPlan"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "items": {
-                    "$ref": "#/components/schemas/SeatingPlan"
-                  }
+                  "$ref": "#/components/schemas/SeatingPlan"
                 }
               }
             }
@@ -333,31 +294,13 @@
     },
     "/shift": {
       "post": {
-        "tags": [
-          "shift"
-        ],
+        "tags": ["shift"],
         "summary": "Create a new shift",
-        "parameters": [
-          {
-            "name": "shift",
-            "in": "query",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "object"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Create name of a dish"
-                  }
-                }
+                "$ref": "#/components/schemas/Shift"
               }
             }
           }
@@ -368,10 +311,100 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "items": {
-                    "$ref": "#/components/schemas/Shift"
-                  }
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/table": {
+      "put": {
+        "tags": ["table"],
+        "summary": "Installs customers at a table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/order": {
+      "put": {
+        "tags": ["table"],
+        "summary": "Pass an order for a table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/bill": {
+      "put": {
+        "tags": ["table"],
+        "summary": "Pass an order for a table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Bill"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
                 }
               }
             }
@@ -387,98 +420,127 @@
   "components": {
     "schemas": {
       "Dish": {
-        "required": [
-          "name",
-          "photoUrls"
-        ],
+        "required": ["name", "type", "description", "price", "quantity"],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
           "name": {
             "type": "string",
-            "example": "doggie"
+            "example": "soup"
           },
-          "photoUrls": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "status": {
+          "type": {
             "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+            "enum": ["apetizer", "starter", "main", "dessert", "drink"]
+          },
+          "description": {
+            "description": "A short description of the dish",
+            "type": "string",
+            "example": "A bowl of soup"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price of the dish, rounded to 2 decimals",
+            "example": "25.50"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity of the dish available",
+            "example": "1"
           }
         }
       },
       "SeatingPlan": {
-        "required": [
-          "name",
-          "photoUrls"
-        ],
+        "required": ["shift_id", "tables"],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
+          "shift_id": {
             "type": "string",
-            "example": "doggie"
+            "format": "DD-MM-YYYY-shifttype",
+            "example": "25-11-1991-dinner"
           },
-          "photoUrls": {
+          "tables": {
             "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "status": {
-            "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+            "description": "Array of tables with table_number and seats"
           }
         }
       },
       "Shift": {
-        "required": [
-          "name",
-          "photoUrls"
-        ],
+        "required": ["shift_id", "started_at"],
         "type": "object",
         "properties": {
-          "id": {
+          "shift_id": {
+            "type": "string",
+            "format": "DD-MM-YYYY-shifttype",
+            "example": "25-11-1991-dinner"
+          },
+          "started_at": {
+            "type": "string",
+            "description": "Time at which the shift was started"
+          }
+        }
+      },
+      "Table": {
+        "required": ["table_number", "seats"],
+        "type": "object",
+        "properties": {
+          "table_id": {
             "type": "integer",
             "format": "int64"
           },
-          "name": {
-            "type": "string",
-            "example": "doggie"
-          },
-          "photoUrls": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "seats": {
+            "type": "integer",
+            "example": "6"
           },
           "status": {
             "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+            "description": "Status of the table",
+            "enum": ["available", "occupied", "reserved"]
+          },
+          "customers": {
+            "type": "integer",
+            "example": "4",
+            "description": "Number of customers installed at the table"
+          },
+          "current_bill": {
+            "type": "number",
+            "example": "25.50",
+            "description": "Current bill of the table"
+          }
+        }
+      },
+      "Order": {
+        "required": ["shift_id", "table_number", "dishes"],
+        "type": "object",
+        "properties": {
+          "shift_id": {
+            "type": "string",
+            "format": "DD-MM-YYYY-shifttype",
+            "example": "25-11-1991-dinner"
+          },
+          "table_number": {
+            "type": "integer",
+            "description": "Number of table from which the order is passed"
+          },
+          "dishes": {
+            "type": "array",
+            "description": "Array of dishes ordered. Takes the name of the dish and a comment"
+          },
+          "bill_paid": {
+            "type": "boolean",
+            "description": "Whether the bill has been paid"
+          }
+        }
+      },
+      "Bill": {
+        "required": ["table_number", "bill"],
+        "type": "object",
+        "properties": {
+          "table_number": {
+            "type": "integer",
+            "description": "Number of table from which the order is passed"
+          },
+          "bill": {
+            "type": "number",
+            "description": "Total bill of the table"
           }
         }
       }
