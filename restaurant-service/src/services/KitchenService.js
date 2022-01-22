@@ -5,11 +5,8 @@ dotenv.config();
 
 const getMenu = async (req, res) => {
   try {
-    const { data } = await axios.get(process.env.MENU_SERVICE_URL);
-    res.status(200).json({
-      message: 'Dishes fetched successfully',
-      dishes: data,
-    });
+    const { data } = await axios.get(process.env.KITCHEN_SERVICE_URL);
+    res.status(200).json(data);
   } catch (err) {
     res.status(400).json({
       message: 'No menu found',
@@ -19,11 +16,8 @@ const getMenu = async (req, res) => {
 
 const getDishes = async (req, res) => {
   try {
-    const { data } = await axios.get(`${process.env.MENU_SERVICE_URL}/dish`);
-    res.status(200).json({
-      message: 'Dishes fetched successfully',
-      dishes: data,
-    });
+    const { data } = await axios.get(`${process.env.KITCHEN_SERVICE_URL}/dish`);
+    res.status(200).json(data);
   } catch (err) {
     res.status(400).json({
       message: 'No dishes found',
@@ -34,12 +28,9 @@ const getDishes = async (req, res) => {
 const getDishById = async (req, res) => {
   try {
     const { data } = await axios.get(
-      `${process.env.MENU_SERVICE_URL}/dish/${req.params.id}`
+      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.id}`
     );
-    res.status(200).json({
-      message: 'Dish fetched successfully',
-      dish: data,
-    });
+    res.status(200).json(data);
   } catch (err) {
     res.status(400).json({
       message: 'No dish found',
@@ -50,13 +41,10 @@ const getDishById = async (req, res) => {
 const createDish = async (req, res) => {
   try {
     const { data } = await axios.post(
-      `${process.env.MENU_SERVICE_URL}/dish`,
+      `${process.env.KITCHEN_SERVICE_URL}/dish`,
       req.body
     );
-    res.status(200).json({
-      message: 'Dish created successfully',
-      dish: data,
-    });
+    res.status(201).json(data);
   } catch (err) {
     res.status(400).json({
       message: 'Dish creation failed',
@@ -67,7 +55,7 @@ const createDish = async (req, res) => {
 const updateDishQuantity = async (req, res) => {
   try {
     const { data } = await axios.put(
-      `${process.env.MENU_SERVICE_URL}/dish/${req.params.id}`,
+      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.id}`,
       req.body
     );
     res.status(200).json({
