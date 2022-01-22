@@ -1,5 +1,4 @@
 import SeatingPlan from '../models/SeatingPlanModel';
-import createEvent from '../helpers/createEvent';
 
 const createSeatingPlan = async (req, res) => {
   try {
@@ -16,7 +15,6 @@ const createSeatingPlan = async (req, res) => {
             'Some error occurred while creating the SeatingPlan.',
         });
       } else {
-        createEvent('SEATING_PLAN_CREATED', plan);
         res.status(201).send({
           message: 'SeatingPlan created successfully',
           seatingPlan: plan,
@@ -49,7 +47,6 @@ const updateSeatingPlan = async (req, res) => {
             message: 'Error updating seatingPlan',
           });
         } else {
-          createEvent('SEATING_PLAN_UPDATED', updatedSeatingPlan);
           res.status(200).json({
             message: 'SeatingPlan updated successfully',
             seatingPlan: updatedSeatingPlan,
