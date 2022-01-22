@@ -13,7 +13,8 @@ import {
   createSeatingPlan,
   updateSeatingPlan,
   getSeatingPlanByShiftId,
-  installCustomers
+  installCustomers,
+  createOrder
 } from '../services/TableService';
 
 const router = express.Router();
@@ -25,7 +26,8 @@ router.get('/dish/:name', getDishByName);
 router.post('/dish', createDish);
 router.put('/dish/:name', updateDishQuantity);
 router.post('/shift', createShift);
-router.put('/tables', installCustomers);
+router.put('/table', installCustomers);
+router.post('/order', createOrder)
 router.post('/seating-plan', createSeatingPlan);
 router.put('/seating-plan/:shift_id', updateSeatingPlan);
 router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);

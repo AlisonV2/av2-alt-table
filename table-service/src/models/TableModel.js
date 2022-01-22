@@ -19,14 +19,14 @@ const tableSchema = new Schema({
         default: 'available',
         enum: ['available', 'occupied', 'reserved']
     },
-    orders: {
-        type: Array,
-        default: [],
-    },
     customers: {
         type: Number,
         default: 0,
         min: 0
+    },
+    current_bill: {
+        type: Number,
+        default: 0,
     }
 });
 

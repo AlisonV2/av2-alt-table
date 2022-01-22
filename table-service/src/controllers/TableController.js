@@ -75,4 +75,29 @@ const installCustomers = async (req, res) => {
   }
 };
 
-export { getTables, createTables, installCustomers };
+const updateCurrentBill = async (req, res) => {
+  try {
+    const table = await Table.findOne({
+      table_number: req.body.table_number,
+    });
+    table.current_bill += req.body.bill;
+    table.save((err, newTable) => {
+      if (err) {
+        res.status(400).json({
+          message: 'Error updating current bill',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Current bill updated successfully',
+          table: newTable,
+        });
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error updating current bill',
+    });
+  }
+}
+
+export { getTables, createTables, installCustomers, updateCurrentBill };

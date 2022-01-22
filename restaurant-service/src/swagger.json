@@ -323,7 +323,7 @@
         }
       }
     },
-    "/tables": {
+    "/table": {
       "put": {
         "tags": ["table"],
         "summary": "Installs customers at a table",
@@ -332,6 +332,68 @@
             "application/x-www-form-urlencoded": {
               "schema": {
                 "$ref": "#/components/schemas/Table"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/order": {
+      "put": {
+        "tags": ["table"],
+        "summary": "Pass an order for a table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/bill": {
+      "put": {
+        "tags": ["table"],
+        "summary": "Pass an order for a table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Bill"
               }
             }
           }
@@ -433,14 +495,57 @@
             "description": "Status of the table",
             "enum": ["available", "occupied", "reserved"]
           },
-          "orders": {
-            "type": "array",
-            "description": "Array of orders_id for the table"
-          },
           "customers": {
             "type": "integer",
             "example": "4",
             "description": "Number of customers installed at the table"
+          },
+          "current_bill": {
+            "type": "number",
+            "example": "25.50",
+            "description": "Current bill of the table"
+          }
+        }
+      },
+      "Order": {
+        "required": ["shift_id", "table_number", "dishes"],
+        "type": "object",
+        "properties": {
+          "shift_id": {
+            "type": "string",
+            "format": "DD-MM-YYYY-shifttype",
+            "example": "25-11-1991-dinner"
+          },
+          "table_number": {
+            "type": "integer",
+            "description": "Number of table from which the order is passed"
+          },
+          "dishes": {
+            "type": "array",
+            "description": "Array of dishes ordered. Takes the name of the dish and the quantity"
+          },
+          "bill_paid": {
+            "type": "boolean",
+            "description": "Whether the bill has been paid"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment for the order",
+            "example": "Sauce on the side"
+          }
+        }
+      },
+      "Bill": {
+        "required": ["table_number", "bill"],
+        "type": "object",
+        "properties": {
+          "table_number": {
+            "type": "integer",
+            "description": "Number of table from which the order is passed"
+          },
+          "bill": {
+            "type": "number",
+            "description": "Total bill of the table"
           }
         }
       }
