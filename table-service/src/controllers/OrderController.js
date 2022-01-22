@@ -1,7 +1,7 @@
 import Order from '../models/OrderModel';
-import { updateTableOrder } from '../controllers/TableController';
 
 const createOrder = async (req, res) => {
+  console.log(req.body)
   try {
     const order = new Order({
       shift_id: req.body.shift_id,
@@ -12,10 +12,9 @@ const createOrder = async (req, res) => {
       if (err) {
         res.status(400).json({
           message: 'Error creating order',
-          error: err,
+          error: err.message,
         });
       } else {
-        updateTableOrder(newOrder);
         res.status(200).json({
           message: 'Order created successfully',
           order: newOrder,

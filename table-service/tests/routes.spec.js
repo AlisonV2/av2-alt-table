@@ -25,6 +25,7 @@ describe('Testing Table routes', () => {
     expect(response.status).toBe(200);
     expect(response.body.table.status).toBe('occupied');
   });
+  
   test('Should return an error as customers are > seats', async () => {
     await request(app)
       .put(`/tables`)

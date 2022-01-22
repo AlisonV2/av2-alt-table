@@ -522,16 +522,11 @@
           },
           "dishes": {
             "type": "array",
-            "description": "Array of dishes ordered. Takes the name of the dish and the quantity"
+            "description": "Array of dishes ordered. Takes the name of the dish and a comment"
           },
           "bill_paid": {
             "type": "boolean",
             "description": "Whether the bill has been paid"
-          },
-          "comment": {
-            "type": "string",
-            "description": "Comment for the order",
-            "example": "Sauce on the side"
           }
         }
       },

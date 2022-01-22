@@ -98,6 +98,28 @@ const updateCurrentBill = async (req, res) => {
       message: 'Error updating current bill',
     });
   }
+};
+
+const getTableByNumber = async (req, res) => {
+  try {
+    const table = await Table.findOne({
+      table_number: req.params.table_number,
+    });
+    if (table) {
+      res.status(200).json({
+        message: 'Table fetched successfully',
+        table: table,
+      });
+    } else {
+      res.status(400).json({
+        message: 'Table not found',
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error fetching table',
+    });
+  }
 }
 
-export { getTables, createTables, installCustomers, updateCurrentBill };
+export { getTables, createTables, installCustomers, updateCurrentBill, getTableByNumber };

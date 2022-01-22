@@ -3,7 +3,6 @@ import axios from 'axios';
 import checkDuplicatedTables from '../helpers/checkDuplicatedTables';
 import checkNegativeNumbers from '../helpers/checkNegativeNumbers';
 
-
 dotenv.config();
 
 const createSeatingPlan = async (req, res) => {
@@ -106,48 +105,79 @@ const createOrder = async (req, res) => {
   let orderPrice = 0;
   const dishes = req.body.dishes;
 
+  axios
+    .get(`${process.env.TABLE_SERVICE_URL}/table/${req.body.table_number}`)
+    .then(({ data }) => {
+      if (data.table.status !== 'occupied') {
+        return res.status(400).json({
+          message: 'Table is not setup',
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: 'Error creating your order',
+        error: err.message,
+      });
+    });
+
   for (let i in dishes) {
+    try {
+      const { data } = await axios.get(
+        `${process.env.KITCHEN_SERVICE_URL}/dish/${dishes[i].name}`
+      );
 
-    if (dishes[i].quantity < 0) {
-      res.status(400).json({
-        message: 'Please provide a valid quantity',
+      if (data.dish.quantity === 0) {
+        return res.status(400).json({
+          message: 'Dish is out of stock',
+        });
+      }
+
+      if (data.dish.quantity < dishes[i].quantity) {
+        return res.status(400).json({
+          message: `${dishes[i].name} is out of stock. Only ${data.dish.quantity} left`,
+        });
+      }
+
+      orderPrice += data.dish.price * dishes[i].quantity;
+      const dishQuantity = data.dish.quantity - dishes[i].quantity;
+
+      await axios.put(
+        `${process.env.KITCHEN_SERVICE_URL}/dish/${dishes[i].name}`,
+        {
+          quantity: dishQuantity,
+        }
+      );
+
+    } catch (err) {
+      return res.status(400).json({
+        message: 'Error creating your order',
       });
-      return;
-    }
-
-    const { data } = await axios.get(
-      `${process.env.KITCHEN_SERVICE_URL}/${dishes[i].name}`
-    );
-
-    orderPrice += data.price * dishes[i].quantity;
-
-    if (data.quantity < dishes[i].quantity) {
-      res.status(400).json({
-        message: `${dishes[i].name} is out of stock. Only ${data.quantity} left`,
-      });
-      return;
     }
   }
-  try {
-    const { data } = await axios.post(
-      `${process.env.TABLE_SERVICE_URL}/order`,
-      req.body
-    );
 
-    await axios.put(`${process.env.TABLE_SERVICE_URL}/bill`, {
+  axios
+    .put(`${process.env.TABLE_SERVICE_URL}/bill`, {
       table_number: req.body.table_number,
       bill: orderPrice,
+    })
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
-    res.status(200).json({
-      message: 'Order created successfully',
-      order: data,
+  axios
+    .post(`${process.env.TABLE_SERVICE_URL}/order`, req.body)
+    .then(({ data }) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: 'Error creating your order',
+      });
     });
-  } catch (err) {
-    res.status(400).json({
-      message: 'Error creating order',
-    });
-  }
 };
 
 export {

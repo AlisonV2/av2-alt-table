@@ -8,7 +8,7 @@ const orderSchema = new Schema({
     required: true,
   },
   table_number: {
-    type: Array,
+    type: Number,
     required: true,
   },
   dishes: {
@@ -18,10 +18,6 @@ const orderSchema = new Schema({
   bill_paid: {
     type: Boolean,
     default: false,
-  },
-  comment: {
-    type: String,
-    default: '',
   },
 });
 
