@@ -70,7 +70,7 @@ const createOrder = async (req, res) => {
     });
 
   axios
-    .post(`${process.env.TABLE_SERVICE_URL}/order`, req.body)
+    .post(`${process.env.TABLE_SERVICE_URL}/order`, {...req.body, bill: orderPrice})
     .then(({ data }) => {
       res.status(200).json(data);
     })

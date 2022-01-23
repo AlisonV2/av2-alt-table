@@ -16,6 +16,7 @@ router.put('/dish/:name', KitchenService.updateDishQuantity);
 router.post('/shift', ShiftService.createShift);
 router.put('/table', TableService.installCustomers);
 router.post('/order', TableService.createOrder);
+router.post('/checkout', TableService.checkOut);
 router.post('/seating-plan', TableService.createSeatingPlan);
 router.put('/seating-plan/:shift_id', TableService.updateSeatingPlan);
 router.get('/seating-plan/:shift_id', TableService.getSeatingPlanByShiftId);

@@ -15,6 +15,10 @@ const orderSchema = new Schema({
     type: Array,
     required: true,
   },
+  bill: {
+    type: Number,
+    required: true,
+  },
   bill_paid: {
     type: Boolean,
     default: false,
