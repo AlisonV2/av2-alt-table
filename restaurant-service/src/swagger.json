@@ -324,6 +324,36 @@
       }
     },
     "/table": {
+      "post": {
+        "tags": ["table"],
+        "summary": "Create tables, happens once a shift has started.",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "array",
+                "$ref": "#/components/schemas/Table"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      },
       "put": {
         "tags": ["table"],
         "summary": "Installs customers at a table",
@@ -349,6 +379,39 @@
           },
           "405": {
             "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/table/{table_number}": {
+      "get": {
+        "tags": ["table"],
+        "summary": "Gets a table by its number",
+        "description": "Returns the current state of the table",
+        "parameters": [
+          {
+            "name": "table_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
             "content": {}
           }
         }
@@ -405,6 +468,37 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/checkout": {
+      "post": {
+        "tags": ["table"],
+        "summary": "Check out a table - Get the current bill and reset the table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Checkout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkout"
                 }
               }
             }
@@ -541,6 +635,25 @@
           "bill": {
             "type": "number",
             "description": "Total bill of the table"
+          }
+        }
+      },
+      "Checkout": {
+        "required": ["shift_id", "table_number"],
+        "type": "object",
+        "properties": {
+          "shift_id": {
+            "type": "string",
+            "format": "DD-MM-YYYY-shifttype",
+            "example": "25-11-1991-dinner"
+          },
+          "table_number": {
+            "type": "integer",
+            "description": "Number of table from which the order is passed"
+          },
+          "tip": {
+            "type": "number",
+            "description": "Tip left by customers"
           }
         }
       }

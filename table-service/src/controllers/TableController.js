@@ -120,6 +120,37 @@ const getTableByNumber = async (req, res) => {
       message: 'Error fetching table',
     });
   }
-}
+};
 
-export { getTables, createTables, installCustomers, updateCurrentBill, getTableByNumber };
+const checkOutTable = async (table_number) => {
+  try {
+    const table = await Table.findOne({
+      table_number: table_number,
+    });
+    if (table.status !== 'occupied') {
+      return;
+    }
+
+    table.status = 'available';
+    table.customers = 0;
+    table.current_bill = 0;
+    table.save((err, newTable) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log(newTable);
+      }
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export {
+  getTables,
+  createTables,
+  installCustomers,
+  updateCurrentBill,
+  getTableByNumber,
+  checkOutTable,
+};
