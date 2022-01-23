@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ratingSchema = new Schema({
   dish_name: {
     type: String,
-    require: true,
+    required: true,
   },
   comment: {
     type: String,

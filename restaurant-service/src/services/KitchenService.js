@@ -3,6 +3,7 @@ import getDishes from './kitchen-service/getDishes';
 import getDishByName from './kitchen-service/getDishByName';
 import createDish from './kitchen-service/createDish';
 import updateDishQuantity from './kitchen-service/updateDishQuantity';
+import rateDish from './kitchen-service/rateDish';
 
 const KitchenService = {
     getMenu,
@@ -10,6 +11,7 @@ const KitchenService = {
     getDishByName,
     createDish,
     updateDishQuantity,
+    rateDish
 };
 
 export default KitchenService;

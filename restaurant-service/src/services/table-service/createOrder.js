@@ -58,8 +58,7 @@ const createOrder = async (req, res) => {
   }
 
   axios
-    .put(`${process.env.TABLE_SERVICE_URL}/bill`, {
-      table_number: req.body.table_number,
+    .put(`${process.env.TABLE_SERVICE_URL}/table/${req.body.table_number}`, {
       bill: orderPrice,
     })
     .then(({ data }) => {

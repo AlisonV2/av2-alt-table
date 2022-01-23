@@ -1,12 +1,12 @@
 import Rating from '../models/RatingModel';
 
 const rateDish = (req, res) => {
+  console.log(req.body, req.params)
   try {
-    const { dish_name, comment, score } = req.body;
     const newRating = new Rating({
-      dish_name: dish_name,
-      comment: comment,
-      score: score,
+      dish_name: req.params.name,
+      comment: req.body.comment,
+      score: req.body.score,
     });
     newRating.save((err, rating) => {
       if (err) {
@@ -14,7 +14,7 @@ const rateDish = (req, res) => {
           error: err,
         });
       }
-      return res.status(200).json({
+      return res.status(201).json({
         message: 'Successfully added a rating',
         rating: rating,
       });

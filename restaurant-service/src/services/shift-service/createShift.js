@@ -23,6 +23,7 @@ const createShift = async (req, res) => {
       `${process.env.TABLE_SERVICE_URL}/tables`,
       seatingPlan[0].content.tables
     );
+    
     res.status(201).json({
       message: 'Shift created successfully',
       data: data,

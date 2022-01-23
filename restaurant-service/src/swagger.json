@@ -415,6 +415,35 @@
             "content": {}
           }
         }
+      },
+      "put": {
+        "tags": ["table"],
+        "summary": "Updates current bill of the table",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Bill"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Table"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        }
       }
     },
     "/order": {
@@ -437,37 +466,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/bill": {
-      "put": {
-        "tags": ["table"],
-        "summary": "Pass an order for a table",
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Bill"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Table"
                 }
               }
             }
@@ -598,6 +596,11 @@
             "type": "number",
             "example": "25.50",
             "description": "Current bill of the table"
+          },
+          "meal_state": {
+            "type": "string",
+            "description": "State of the meal",
+            "enum": ["not-started", "started", "finished"]
           }
         }
       },
