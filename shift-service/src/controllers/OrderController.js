@@ -1,6 +1,5 @@
 import Order from '../models/OrderModel';
 import formatPrice from '../helpers/formatPrice';
-import { checkOutTable } from '../controllers/TableController';
 
 const createOrder = async (req, res) => {
   try {
@@ -59,6 +58,7 @@ const getOrdersByTableNumber = async (req, res) => {
 };
 
 const checkOut = async (req, res) => {
+  console.log(req.body);
   let totalBill = req.body.tip ?? 0;
   let dishes = [];
   try {
@@ -74,6 +74,8 @@ const checkOut = async (req, res) => {
       });
     }
 
+    console.log(orders)
+
     for (let i in orders) {
       totalBill += orders[i].bill;
       dishes = [...dishes, ...orders[i].dishes];
@@ -87,7 +89,7 @@ const checkOut = async (req, res) => {
       );
     }
 
-    await checkOutTable(req.body.table_number);
+    console.log(totalBill)
 
     res.status(200).json({
       message: 'Checkout successful',

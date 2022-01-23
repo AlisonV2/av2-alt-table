@@ -15,7 +15,7 @@ const createShift = async (req, res) => {
 
   try {
     const { data } = await axios.post(
-      `${process.env.SHIFT_SERVICE_URL}`,
+      `${process.env.SHIFT_SERVICE_URL}/shift`,
       req.body
     );
 

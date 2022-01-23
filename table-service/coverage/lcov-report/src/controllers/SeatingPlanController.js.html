@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">78.4% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>66/88</span>
+                <span class='fraction'>69/88</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>8/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">78.4% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>66/88</span>
+                <span class='fraction'>69/88</span>
             </div>
         
             
@@ -165,8 +165,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -182,11 +180,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -219,6 +217,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -251,9 +251,7 @@ const createSeatingPlan = async (req, res) =&gt; {
     seatingPlan.save((err, plan) =&gt; {
       if (err) {
         res.status(400).send({
-          message:
-<span class="branch-0 cbranch-no" title="branch not covered" >            err.message ||</span>
-<span class="cstat-no" title="statement not covered" >            'Some error occurred while creating the SeatingPlan.',</span>
+          message: err.message,
         });
       } else {
         res.status(201).send({
@@ -264,12 +262,10 @@ const createSeatingPlan = async (req, res) =&gt; {
     });
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).send({</span>
-<span class="cstat-no" title="statement not covered" >      message:</span>
-<span class="cstat-no" title="statement not covered" >        err.message || 'Some error occurred while creating the SeatingPlan.',</span>
+<span class="cstat-no" title="statement not covered" >      message: err.message,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400).send({</span>
-<span class="cstat-no" title="statement not covered" >      message:</span>
-<span class="cstat-no" title="statement not covered" >        err.message || 'Some error occurred while creating the SeatingPlan.',</span>
+<span class="cstat-no" title="statement not covered" >      message: err.message,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 };
@@ -278,7 +274,9 @@ const updateSeatingPlan = async (req, res) =&gt; {
   try {
     const tables = req.body.tables;
 &nbsp;
-    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
+    const seatingPlan = await SeatingPlan.findOne({
+      shift_id: req.params.shift_id,
+    });
     if (seatingPlan) {
       seatingPlan.tables = tables;
       seatingPlan.save((err, updatedSeatingPlan) =&gt; {
@@ -308,7 +306,9 @@ const updateSeatingPlan = async (req, res) =&gt; {
 &nbsp;
 const getSeatingPlanByShiftId = async (req, res) =&gt; {
   try {
-    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
+    const seatingPlan = await SeatingPlan.findOne({
+      shift_id: req.params.shift_id,
+    });
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',
@@ -334,7 +334,7 @@ export { createSeatingPlan, updateSeatingPlan, getSeatingPlanByShiftId };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun Jan 23 2022 14:24:58 GMT+0100 (Central European Standard Time)
+                at Sun Jan 23 2022 17:26:15 GMT+0100 (Central European Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

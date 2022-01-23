@@ -2,12 +2,16 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const restaurantSchema = new Schema({
+const eventSchema = new Schema({
+  created_at: {
+    type: Date,
+    default: Date.now(),
+  },
   shift_id: {
     type: String,
     required: true,
   },
-  event: {
+  type: {
     type: String,
     required: true,
   },
@@ -16,6 +20,6 @@ const restaurantSchema = new Schema({
   },
 });
 
-const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+const Event = mongoose.model('Event', eventSchema);
 
-export default Restaurant;
+export default Event;

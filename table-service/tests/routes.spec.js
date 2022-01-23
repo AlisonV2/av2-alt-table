@@ -1,7 +1,6 @@
 import request from 'supertest';
 import app from '../src/app';
 import { setupDb, table2, table4, seatingPlan1 } from './fixtures/tableDb';
-import { checkOutTable } from '../src/controllers/TableController';
 
 beforeEach(setupDb);
 
@@ -78,7 +77,6 @@ describe('Testing Table routes', () => {
       .post('/checkout')
       .send({
         table_number: 1,
-        shift_id: '25-11-1996-dinner',
       })
       .expect(200);
 
@@ -147,63 +145,5 @@ describe('Testing SeatingPlan routes', () => {
   test('Should return an error when not found', async () => {
     const response = await request(app).get(`/seating-plan/1234`);
     expect(response.status).toBe(400);
-  });
-});
-
-describe('Testing Order routes', () => {
-  test('Should create an order', async () => {
-    const response = await request(app)
-      .post('/order')
-      .send({
-        table_number: 1,
-        shift_id: 'what-ever',
-        dishes: [
-          {
-            name: 'Dish1',
-            price: 10,
-          },
-        ],
-      })
-      .expect(201);
-    expect(response.body.order).toHaveProperty('_id');
-  });
-
-  test('Should get orders by table number', async () => {
-    const response = await request(app)
-      .post('/order/1')
-      .send({
-        shift_id: '25-11-1996-dinner',
-      })
-      .expect(200);
-    expect(response.body.orders.length).toBe(1);
-  });
-
-  test('Should return an error when shift_id is wrong', async () => {
-    await request(app)
-      .post('/order/1')
-      .send({
-        shift_id: '1234',
-      })
-      .expect(400);
-  });
-
-  test('Should return an error when table_number is wrong', async () => {
-    await request(app)
-      .post('/order/12')
-      .send({
-        shift_id: '25-11-1996-dinner',
-      })
-      .expect(400);
-  });
-});
-
-describe('Testing TableController', () => {
-  test('Should tell that table is not occupied', async () => {
-    const response = await checkOutTable(2);
-    expect(response).toBe('Table is not occupied');
-  });
-  test('Should throw an error message', async () => {
-    const response = await checkOutTable(25);
-    expect(response).toBe("Cannot read property 'status' of null");
   });
 });

@@ -3,16 +3,14 @@ import axios from 'axios';
 
 dotenv.config();
 
-const getDishByName = async (req, res) => {
+const getDishByName = async (dish_name) => {
   try {
     const { data } = await axios.get(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`
+      `${process.env.KITCHEN_SERVICE_URL}/dish/${dish_name}`
     );
-    res.status(200).json(data);
+    return data;
   } catch (err) {
-    res.status(400).json({
-      message: 'No dish found',
-    });
+    return new Error(err.message);
   }
 };
 

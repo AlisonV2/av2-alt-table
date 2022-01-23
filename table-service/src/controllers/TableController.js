@@ -122,14 +122,17 @@ const getTableByNumber = async (req, res) => {
   }
 };
 
-const checkOutTable = async (table_number) => {
+const checkOutTable = async (req, res) => {
   try {
     const table = await Table.findOne({
-      table_number: table_number,
+      table_number: req.body.table_number,
     });
 
     if (table.status !== 'occupied') {
-      return 'Table is not occupied';
+      res.status(400).json({
+        message: 'Table is not occupied',
+      });
+      return;
     }
 
     table.status = 'available';
@@ -138,13 +141,20 @@ const checkOutTable = async (table_number) => {
     table.meal_state = 'not-started';
     table.save((err, newTable) => {
       if (err) {
-        return err.message;
+        res.status(400).json({
+          message: 'Error checking out table',
+        });
       } else {
-        return newTable;
+        res.status(200).json({
+          message: 'Table checked out successfully',
+          table: newTable,
+        });
       }
     });
   } catch (err) {
-    return err.message;
+    res.status(400).json({
+      message: 'Error checking out table',
+    });
   }
 };
 

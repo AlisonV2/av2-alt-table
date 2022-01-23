@@ -92,9 +92,6 @@ const getDishByName = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(404).json({
-      message: 'No dish found',
-    });
     res.status(400).json({
       message: 'Error fetching dish',
     });

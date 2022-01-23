@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
+import KitchenService from '../KitchenService';
 
 dotenv.config();
 
@@ -69,7 +70,7 @@ const createOrder = async (req, res) => {
     });
 
   axios
-    .post(`${process.env.TABLE_SERVICE_URL}/order`, {...req.body, bill: orderPrice})
+    .post(`${process.env.SHIFT_SERVICE_URL}/order`, {...req.body, bill: orderPrice})
     .then(({ data }) => {
       res.status(200).json(data);
     })
