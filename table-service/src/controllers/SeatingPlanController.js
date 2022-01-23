@@ -10,9 +10,7 @@ const createSeatingPlan = async (req, res) => {
     seatingPlan.save((err, plan) => {
       if (err) {
         res.status(400).send({
-          message:
-            err.message ||
-            'Some error occurred while creating the SeatingPlan.',
+          message: err.message,
         });
       } else {
         res.status(201).send({
@@ -23,12 +21,10 @@ const createSeatingPlan = async (req, res) => {
     });
   } catch (err) {
     res.status(500).send({
-      message:
-        err.message || 'Some error occurred while creating the SeatingPlan.',
+      message: err.message,
     });
     res.status(400).send({
-      message:
-        err.message || 'Some error occurred while creating the SeatingPlan.',
+      message: err.message,
     });
   }
 };
@@ -37,7 +33,9 @@ const updateSeatingPlan = async (req, res) => {
   try {
     const tables = req.body.tables;
 
-    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
+    const seatingPlan = await SeatingPlan.findOne({
+      shift_id: req.params.shift_id,
+    });
     if (seatingPlan) {
       seatingPlan.tables = tables;
       seatingPlan.save((err, updatedSeatingPlan) => {
@@ -67,7 +65,9 @@ const updateSeatingPlan = async (req, res) => {
 
 const getSeatingPlanByShiftId = async (req, res) => {
   try {
-    const seatingPlan = await SeatingPlan.findOne({ shift_id: req.params.shift_id });
+    const seatingPlan = await SeatingPlan.findOne({
+      shift_id: req.params.shift_id,
+    });
     if (seatingPlan) {
       res.status(200).json({
         message: 'SeatingPlan fetched successfully',

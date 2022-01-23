@@ -11,8 +11,10 @@ const table1 = {
   _id: id1,
   table_number: 1,
   seats: 4,
-  status: 'available',
-  customers: 0,
+  status: 'occupied',
+  customers: 4,
+  current_bill: 18.99,
+  meal_state: 'in-progress'
 };
 
 const table2 = {
@@ -40,25 +42,34 @@ const table4 = {
 
 const seatingPlan1 = {
   _id: id1,
-  shift_id: '1dsfqfqsdfzs',
+  shift_id: '25-11-1996-dinner',
   tables: [table1, table2],
 };
 
 const seatingPlan2 = {
-  shift_id: '1dseqdfzs',
+  shift_id: '25-11-1996-lunch',
   tables: [table3, table4],
 };
 
 const order1 = {
   _id: id1,
   table_number: 1,
-  shift_id: '1dsfqfqsdfzs',
+  shift_id: '25-11-1996-dinner',
   dishes: [
     {
       name: 'Dish1',
       price: 10,
     },
   ],
+  bill_paid: false
+};
+
+const order2 = {
+  _id: id2,
+  table_number: 2,
+  shift_id: '26-11-1996-lunch',
+  dishes: [],
+  bill_paid: false
 };
 
 const setupDb = async () => {
@@ -67,7 +78,7 @@ const setupDb = async () => {
   await SeatingPlan.deleteMany();
   await SeatingPlan.insertMany([seatingPlan1]);
   await Order.deleteMany();
-  await Order.insertMany([order1]);
+  await Order.insertMany([order1, order2]);
 };
 
-export { setupDb, table3, table4, seatingPlan1, seatingPlan2 };
+export { setupDb, table2, table4, seatingPlan1, seatingPlan2, order1 };

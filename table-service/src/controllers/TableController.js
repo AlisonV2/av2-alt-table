@@ -78,7 +78,7 @@ const installCustomers = async (req, res) => {
 const updateCurrentBill = async (req, res) => {
   try {
     const table = await Table.findOne({
-      table_number: req.body.table_number,
+      table_number: req.params.table_number,
     });
     table.current_bill += req.body.bill;
     table.save((err, newTable) => {
@@ -111,7 +111,7 @@ const getTableByNumber = async (req, res) => {
         table: table,
       });
     } else {
-      res.status(400).json({
+      res.status(404).json({
         message: 'Table not found',
       });
     }
@@ -127,22 +127,24 @@ const checkOutTable = async (table_number) => {
     const table = await Table.findOne({
       table_number: table_number,
     });
+
     if (table.status !== 'occupied') {
-      return;
+      return 'Table is not occupied';
     }
 
     table.status = 'available';
     table.customers = 0;
     table.current_bill = 0;
+    table.meal_state = 'not-started';
     table.save((err, newTable) => {
       if (err) {
-        console.log(err.message);
+        return err.message;
       } else {
-        console.log(newTable);
+        return newTable;
       }
     });
   } catch (err) {
-    console.log(err.message);
+    return err.message;
   }
 };
 

@@ -1,6 +1,6 @@
 import Order from '../models/OrderModel';
 import formatPrice from '../helpers/formatPrice';
-import { checkOutTable} from '../controllers/TableController';
+import { checkOutTable } from '../controllers/TableController';
 
 const createOrder = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const createOrder = async (req, res) => {
           error: err.message,
         });
       } else {
-        res.status(200).json({
+        res.status(201).json({
           message: 'Order created successfully',
           order: newOrder,
         });
@@ -29,11 +29,40 @@ const createOrder = async (req, res) => {
   }
 };
 
+const getOrdersByTableNumber = async (req, res) => {
+  let dishesOrdered = [];
+  try {
+    const orders = await Order.find({
+      shift_id: req.body.shift_id,
+      table_number: req.params.table_number,
+    });
+
+    if (orders.length === 0) {
+      return res.status(400).json({
+        message: 'No order found',
+      });
+    }
+
+    for (let i in orders) {
+      dishesOrdered = [...dishesOrdered, ...orders[i].dishes];
+    }
+
+    res.status(200).json({
+      message: `Dishes ordered by table number ${req.params.table_number}`,
+      orders: dishesOrdered,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: 'Error getting orders',
+    });
+  }
+};
+
 const checkOut = async (req, res) => {
   let totalBill = req.body.tip ?? 0;
   let dishes = [];
   try {
-    const orders = await Order.find({ 
+    const orders = await Order.find({
       shift_id: req.body.shift_id,
       table_number: req.body.table_number,
       bill_paid: false,
@@ -49,9 +78,13 @@ const checkOut = async (req, res) => {
       totalBill += orders[i].bill;
       dishes = [...dishes, ...orders[i].dishes];
 
-      await Order.findByIdAndUpdate(orders[i]._id, {
-        bill_paid: true,
-      });
+      await Order.findByIdAndUpdate(
+        orders[i]._id,
+        {
+          bill_paid: true,
+        },
+        { useFindAndModify: false, new: false }
+      );
     }
 
     await checkOutTable(req.body.table_number);
@@ -59,13 +92,12 @@ const checkOut = async (req, res) => {
     res.status(200).json({
       message: 'Checkout successful',
       bill: formatPrice(totalBill),
-      dishes: dishes
+      dishes: dishes,
     });
-
   } catch (err) {
     res.status(400).json({
       message: 'Error checking out',
     });
   }
 };
-export { createOrder, checkOut };
+export { createOrder, checkOut, getOrdersByTableNumber };

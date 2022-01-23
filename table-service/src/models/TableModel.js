@@ -27,6 +27,11 @@ const tableSchema = new Schema({
     current_bill: {
         type: Number,
         default: 0,
+    },
+    meal_state: {
+        type: String,
+        enum: ['not-started', 'in-progress', 'finished'],
+        default: 'not-started'
     }
 });
 
