@@ -1,72 +1,15 @@
-import dotenv from 'dotenv';
-import axios from 'axios';
+import getMenu from './kitchen-service/getMenu';
+import getDishes from './kitchen-service/getDishes';
+import getDishByName from './kitchen-service/getDishByName';
+import createDish from './kitchen-service/createDish';
+import updateDishQuantity from './kitchen-service/updateDishQuantity';
 
-dotenv.config();
-
-const getMenu = async (req, res) => {
-  try {
-    const { data } = await axios.get(process.env.KITCHEN_SERVICE_URL);
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(400).json({
-      message: 'No menu found',
-    });
-  }
+const KitchenService = {
+    getMenu,
+    getDishes,
+    getDishByName,
+    createDish,
+    updateDishQuantity,
 };
 
-const getDishes = async (req, res) => {
-  try {
-    const { data } = await axios.get(`${process.env.KITCHEN_SERVICE_URL}/dish`);
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(400).json({
-      message: 'No dishes found',
-    });
-  }
-};
-
-const getDishByName = async (req, res) => {
-  try {
-    const { data } = await axios.get(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`
-    );
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(400).json({
-      message: 'No dish found',
-    });
-  }
-};
-
-const createDish = async (req, res) => {
-  try {
-    const { data } = await axios.post(
-      `${process.env.KITCHEN_SERVICE_URL}/dish`,
-      req.body
-    );
-    res.status(201).json(data);
-  } catch (err) {
-    res.status(400).json({
-      message: 'Dish creation failed',
-    });
-  }
-};
-
-const updateDishQuantity = async (req, res) => {
-  try {
-    const { data } = await axios.put(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`,
-      req.body
-    );
-    res.status(200).json({
-      message: 'Dish updated successfully',
-      dish: data,
-    });
-  } catch (err) {
-    res.status(400).json({
-      message: 'Dish update failed',
-    });
-  }
-};
-
-export { getMenu, getDishes, getDishByName, createDish, updateDishQuantity };
+export default KitchenService;
