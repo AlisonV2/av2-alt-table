@@ -43,7 +43,7 @@ const createDish = (req, res) => {
     });
   } catch (err) {
     res.status(400).json({
-      message: 'Error while creating dish',
+      message: 'Error creating dish',
     });
   }
 };
@@ -65,6 +65,10 @@ const updateDishQuantity = async (req, res) => {
           });
         }
       });
+    } else {
+      res.status(404).json({
+        message: 'Dish not found',
+      });
     }
   } catch (err) {
     res.status(400).json({
@@ -83,7 +87,7 @@ const getDishByName = async (req, res) => {
         dish: dish,
       });
     } else {
-      res.status(400).json({
+      res.status(404).json({
         message: 'Dish not found',
       });
     }

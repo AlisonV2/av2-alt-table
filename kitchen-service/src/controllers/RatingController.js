@@ -1,7 +1,6 @@
 import Rating from '../models/RatingModel';
 
 const rateDish = (req, res) => {
-  console.log(req.body, req.params)
   try {
     const newRating = new Rating({
       dish_name: req.params.name,
