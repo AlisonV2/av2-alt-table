@@ -99,6 +99,7 @@ describe('Testing Table routes', () => {
       .send({
         shift_id: shift1.shift_id,
         table_number: 1,
+        tip: 0
       })
       .expect(200);
 

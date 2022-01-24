@@ -1,6 +1,7 @@
 import TableService from '../services/TableService';
 import ShiftService from '../services/ShiftService';
 import KitchenService from '../services/KitchenService';
+import formatPrice from '../helpers/formatPrice';
 
 class TableController {
   static async getTables(req, res) {
@@ -22,7 +23,7 @@ class TableController {
     try {
       await ShiftService.getShift(shift_id);
 
-      const table = TableService.getTableByNumber(table_number);
+      const table = await TableService.getTableByNumber(table_number);
       if (table.status !== 'available') {
         return res.status(400).json({
           message: 'Table is not available',
@@ -34,7 +35,6 @@ class TableController {
         });
       }
 
-      console.log(table)
       const updatedTable = await TableService.updateTableStatus(
         table._id,
         'occupied',
