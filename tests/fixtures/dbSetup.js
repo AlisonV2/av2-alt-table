@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import Shift from '../../src/shift-service/models/ShiftModel';
-import Table from '../../src/table-service/models/TableModel';
-import Order from '../../src/shift-service/models/OrderModel';
-import Dish from '../../src/kitchen-service/models/DishModel';
-import SeatingPlan from '../../src/table-service/models/SeatingPlanModel';
+import Shift from '../../src/models/ShiftModel';
+import Table from '../../src/models/TableModel';
+import Order from '../../src/models/OrderModel';
+import Dish from '../../src/models/DishModel';
+import SeatingPlan from '../../src/models/SeatingPlanModel';
 
 const id1 = new mongoose.Types.ObjectId();
 const id2 = new mongoose.Types.ObjectId();
@@ -22,8 +22,8 @@ const shift2 = {
 };
 
 const shift3 = {
-  shift_id: '2022-01-25T10:12:00.005Z',
-  started_at: '12:00',
+  shift_id: '2020-01-24T10:18:00.005Z',
+  started_at: '18:00',
 };
 
 const order1 = {
@@ -139,11 +139,17 @@ const seatingPlan2 = {
   tables: [table3, table4],
 };
 
+const seatingPlan3 = {
+  _id: id3,
+  shift_id: '2020-01-24T10:18:00.005Z',
+  tables: [table1, table2, table3],
+};
+
 const setupDb = async () => {
   await Table.deleteMany();
   await Table.insertMany([table1, table2, table3]);
   await SeatingPlan.deleteMany();
-  await SeatingPlan.insertMany([seatingPlan1]);
+  await SeatingPlan.insertMany([seatingPlan1, seatingPlan3]);
   await Dish.deleteMany();
   await Dish.insertMany([dish1, dish2, dish3]);
   await Shift.deleteMany();

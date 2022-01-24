@@ -5,11 +5,13 @@ import {
   dish3,
   dish4,
   shift2,
+  shift3,
   table4,
   seatingPlan1,
 } from './fixtures/dbSetup';
 import Dish from '../src/kitchen-service/models/DishModel';
 import Table from '../src/table-service/models/TableModel';
+import Shift from '../src/shift-service/models/ShiftModel';
 
 beforeEach(setupDb);
 
@@ -166,5 +168,17 @@ describe('Testing Order routes', () => {
       })
       .expect(201);
     expect(response.body.order).toHaveProperty('_id');
+  });
+});
+
+describe('Testing Shift routes', () => {
+  test('Should create a new Shift', async () => {
+    const response = await request(app)
+      .post('/api/shift')
+      .send(shift3)
+      .expect(201);
+
+    const shift = await Shift.findById(response.body.shift._id);
+    expect(shift).not.toBeNull();
   });
 });
