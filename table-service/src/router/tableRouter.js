@@ -21,9 +21,9 @@ router.put('/table', installCustomers);
 router.get('/table/:table_number', getTableByNumber);
 router.put('/table/:table_number', updateCurrentBill);
 
+router.post('/seating-plan', createSeatingPlan);
 router.get('/seating-plan/:shift_id', getSeatingPlanByShiftId);
 router.put('/seating-plan/:shift_id', updateSeatingPlan);
-router.post('/seating-plan', createSeatingPlan);
 
 router.post('/checkout', checkOutTable);
 

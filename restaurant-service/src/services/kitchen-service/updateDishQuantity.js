@@ -3,20 +3,13 @@ import axios from 'axios';
 
 dotenv.config();
 
-const updateDishQuantity = async (req, res) => {
+const updateDishQuantity = async (dish_name, quantity) => {
   try {
-    const { data } = await axios.put(
-      `${process.env.KITCHEN_SERVICE_URL}/dish/${req.params.name}`,
-      req.body
-    );
-    res.status(200).json({
-      message: 'Dish updated successfully',
-      dish: data,
+    await axios.put(`${process.env.KITCHEN_SERVICE_URL}/dish/${dish_name}`, {
+      quantity: quantity,
     });
   } catch (err) {
-    res.status(400).json({
-      message: 'Dish update failed',
-    });
+    return err.message;
   }
 };
 

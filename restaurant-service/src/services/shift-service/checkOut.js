@@ -12,7 +12,6 @@ const checkOut = async (req, res) => {
       `${process.env.SHIFT_SERVICE_URL}/checkout`,
       req.body
     );
-    console.log(data);
     res.status(200).json(data);
   } catch (err) {
     res.status(400).json({

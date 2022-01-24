@@ -1,6 +1,18 @@
 import SeatingPlan from '../models/SeatingPlanModel';
+import checkDuplicatedTables from '../helpers/checkDuplicatedTables';
+import checkNegativeNumbers from '../helpers/checkNegativeNumbers';
 
 const createSeatingPlan = async (req, res) => {
+  const isDuplicated = checkDuplicatedTables(req.body.tables);
+  const isNegative = checkNegativeNumbers(req.body.tables);
+
+  if (isDuplicated || isNegative) {
+    res.status(400).json({
+      error: 'Invalid tables',
+    });
+    return;
+  }
+
   try {
     const seatingPlan = new SeatingPlan({
       shift_id: req.body.shift_id,
@@ -30,6 +42,15 @@ const createSeatingPlan = async (req, res) => {
 };
 
 const updateSeatingPlan = async (req, res) => {
+  const isDuplicated = checkDuplicatedTables(req.body.tables);
+  const isNegative = checkNegativeNumbers(req.body.tables);
+
+  if (isDuplicated || isNegative) {
+    return res.status(400).json({
+      error: 'Invalid tables',
+    });
+  }
+
   try {
     const tables = req.body.tables;
 

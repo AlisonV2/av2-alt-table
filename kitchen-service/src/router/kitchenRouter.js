@@ -5,7 +5,7 @@ import { rateDish } from '../controllers/RatingController';
 
 const router = express.Router();
 
-router.get('/', getMenu);
+router.get('/menu', getMenu);
 router.get('/dish', getDishes);
 router.post('/dish', createDish);
 router.put('/dish/:name', updateDishQuantity);

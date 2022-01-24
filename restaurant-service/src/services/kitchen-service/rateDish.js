@@ -7,7 +7,7 @@ const rateDish = async (req, res) => {
   // shift_id, table_number, dish_name, score, comment
   try {
     const { data } = await axios.post(
-      `${process.env.TABLE_SERVICE_URL}/order/${req.body.table_number}`,
+      `${process.env.SHIFT_SERVICE_URL}/order/${req.body.table_number}`,
       {
         shift_id: req.body.shift_id,
       }

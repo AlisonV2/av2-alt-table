@@ -80,7 +80,7 @@ describe('Testing DishRoutes', () => {
 
 describe('Testing MenuRoutes', () => {
   test('Should get all dishes, except the ones with quantity = 0', async () => {
-    const response = await request(app).get('/').expect(200);
+    const response = await request(app).get('/menu').expect(200);
     expect(response.body.dishes.length).toBe(2);
   });
 });
