@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import axios from 'axios';
 import ShiftService from '../ShiftService';
+import TableService from '../TableService';
 
 dotenv.config();
 
@@ -14,11 +14,10 @@ const installCustomers = async (req, res) => {
       });
       return;
     }
-    const { data } = await axios.put(
-      `${process.env.TABLE_SERVICE_URL}/tables`,
-      req.body
-    );
-    res.status(200).json(data);
+
+    const tables = await TableService.createTables(req.body);
+
+    res.status(200).json(tables);
   } catch (err) {
     res.status(400).json({
       message: 'Error installing customers',

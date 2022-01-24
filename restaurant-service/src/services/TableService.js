@@ -3,6 +3,7 @@ import installCustomers from './table-service/installCustomers';
 import checkOutTable from './table-service/checkOutTable';
 import updateCurrentBill from './table-service/updateCurrentBill';
 import getTableByNumber from './table-service/getTableByNumber';
+import createTables from './table-service/createTables';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ const TableService = {
   checkOutTable,
   updateCurrentBill,
   getTableByNumber,
+  createTables,
 };
 
 export default TableService;
