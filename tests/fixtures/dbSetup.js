@@ -22,14 +22,14 @@ const shift2 = {
 };
 
 const shift3 = {
-  shift_id: '2021-01-24T10:12:00.005Z',
+  shift_id: '2022-01-25T10:12:00.005Z',
   started_at: '12:00',
 };
 
 const order1 = {
   _id: id1,
   table_number: 1,
-  shift_id: '2022-01-24T10:12:00.005Z',
+  shift_id: '2022-02-24T10:12:00.005Z',
   dishes: [
     {
       name: 'Dish1',
@@ -130,7 +130,7 @@ const table4 = {
 
 const seatingPlan1 = {
   _id: id1,
-  shift_id: '2022-01-25T10:12:00.005Z',
+  shift_id: '2022-02-24T10:12:00.005Z',
   tables: [table1, table2],
 };
 
