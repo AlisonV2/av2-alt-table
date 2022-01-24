@@ -12,14 +12,16 @@ router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 router.get('/menu', KitchenController.getMenu);
 router.get('/dish', KitchenController.getDishes);
-router.post('/dish', KitchenController.createDish); // params: dish model
-router.put('/dish', KitchenController.updateDishQuantity); // params: name, quantity
+router.post('/dish', KitchenController.createDish);
+router.put('/dish', KitchenController.updateDishQuantity);
+router.post('/rating', KitchenController.rateDish);
 
 router.post('/seating-plan', ShiftController.createSeatingPlan); 
 router.put('/seating-plan', ShiftController.updateSeatingPlan);
 router.post('/shift', ShiftController.createShift);
+router.get('/shift/:shift_id', ShiftController.getShiftState)
 
-router.put('/table', TableController.installCustomers); // params: shift_id, number of customers, table_number
+router.put('/table', TableController.installCustomers);
 router.post('/order', TableController.createOrder);
 router.post('/checkout', TableController.checkoutTable);
 

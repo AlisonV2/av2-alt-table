@@ -6,7 +6,7 @@ class ShiftController {
     const { shift_id, tables } = req.body;
     try {
       const seatingPlan = await ShiftService.createSeatingPlan(shift_id, tables);
-      res.status(200).json({
+      res.status(201).json({
         message: 'Seating plan created successfully',
         seatingPlan: seatingPlan,
       });
@@ -47,6 +47,24 @@ class ShiftController {
       res.status(400).json({
         message: 'Error creating shift',
         error: err.message,
+      });
+    }
+  }
+
+  static async getShiftState(req, res) {
+    const shift_id = req.params.shift_id;
+    try {
+      const tables = await TableService.getTables();
+      const shiftState = await TableService.getOrderedDishes(shift_id, tables);
+      
+      res.status(200).json({
+        message: 'Current state of the shift',
+        state: shiftState
+      });
+
+    } catch (err) {
+      res.status(400).json({
+        message: 'Error getting shift state',
       });
     }
   }

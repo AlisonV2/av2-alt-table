@@ -1,5 +1,5 @@
 import Shift from '../models/ShiftModel';
-import SeatingPlan from '../models/SeatingPlan';
+import SeatingPlan from '../models/SeatingPlanModel';
 import checkDuplicatedTables from '../helpers/checkDuplicatedTables';
 import checkNegativeNumbers from '../helpers/checkNegativeNumbers';
 

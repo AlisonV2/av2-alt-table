@@ -3,7 +3,7 @@ import KitchenService from '../services/KitchenService';
 class KitchenController {
   static async getDishes(req, res) {
     try {
-      await KitchenService.getDishes();
+      const dishes = await KitchenService.getDishes();
       res.status(200).json({
         message: 'Dishes fetched successfully',
         dishes: dishes,
@@ -54,6 +54,22 @@ class KitchenController {
     } catch (err) {
       res.status(400).json({
         message: 'Error updating dish',
+        error: err.message,
+      });
+    }
+  }
+
+  static async rateDish(req, res) {
+    const { shift_id, dish_name, comment, score } = req.body;
+    try {
+      const newRating = await KitchenService.rateDish(shift_id, dish_name, comment, score);
+      res.status(201).json({
+        message: 'Rating created successfully',
+        rating: newRating,
+      });
+    } catch (err) {
+      res.status(400).json({
+        message: 'Error creating rating',
         error: err.message,
       });
     }

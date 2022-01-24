@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ratingSchema = new Schema({
+  shift_id: {
+    type: String,
+    required: true,
+  },
   dish_name: {
     type: String,
     required: true,

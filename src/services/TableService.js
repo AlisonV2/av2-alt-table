@@ -3,7 +3,11 @@ import Order from '../models/OrderModel';
 
 class TableService {
   static async getTables() {
-    return Table.find();
+    const tables = await Table.find();
+    if (!tables.length) {
+      throw new Error('No tables found');
+    }
+    return tables;
   }
 
   static async createTables(tables = []) {
@@ -44,16 +48,28 @@ class TableService {
   }
 
   static async getOrders(shift_id, table_number) {
-    const orders = await Order.find({
+    return Order.find({
       shift_id,
       table_number,
       bill_paid: false,
     });
+  }
 
-    if (!orders.length) {
-      throw new Error('No order found');
+  static async getOrderedDishes(shift_id, tables) {
+    let orderedDishes = [];
+    let shiftState = [];
+
+    for (let i in tables) {
+      const orders = await this.getOrders(shift_id, tables[i].table_number);
+      for (let j in orders) {
+        orderedDishes = [...orderedDishes, ...orders[j].dishes];
+      }
+      shiftState.push({
+        ...tables[i],
+        dishes: orderedDishes,
+      });
     }
-    return orders;
+    return shiftState;
   }
 
   static async payOrdersBills(shift_id, table_number, tip) {

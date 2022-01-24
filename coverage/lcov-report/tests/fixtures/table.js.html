@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/router/router.js</title>
+    <title>Code coverage report for tests/fixtures/table.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/router</a> router.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">tests/fixtures</a> table.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
@@ -91,7 +91,18 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -119,35 +130,57 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from 'express';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../swagger.json';
-import KitchenController from '../controllers/KitchenController';
-import TableController from '../controllers/TableController';
-import ShiftController from '../controllers/ShiftController';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import mongoose from 'mongoose';
 &nbsp;
-const router = express.Router();
+const id1 = new mongoose.Types.ObjectId();
+const id2 = new mongoose.Types.ObjectId();
+const id3 = new mongoose.Types.ObjectId();
+ 
+const table1 = {
+  _id: id1,
+  table_number: 1,
+  seats: 4,
+  status: 'occupied',
+  customers: 4,
+  current_bill: 18.99,
+  meal_state: 'in-progress',
+};
 &nbsp;
-router.use('/docs', swaggerUi.serve);
-router.get('/docs', swaggerUi.setup(swaggerDocument));
+const table2 = {
+  _id: id2,
+  table_number: 2,
+  seats: 6,
+  status: 'available',
+  customers: 0,
+};
 &nbsp;
-router.get('/menu', KitchenController.getMenu);
-router.get('/dish', KitchenController.getDishes);
-router.post('/dish', KitchenController.createDish);
-router.put('/dish', KitchenController.updateDishQuantity);
-router.post('/rating', KitchenController.rateDish);
+const table3 = {
+  _id: id3,
+  table_number: 3,
+  seats: 8,
+  status: 'available',
+  customers: 0,
+};
 &nbsp;
-router.post('/seating-plan', ShiftController.createSeatingPlan); 
-router.put('/seating-plan', ShiftController.updateSeatingPlan);
-router.post('/shift', ShiftController.createShift);
-router.get('/shift/:shift_id', ShiftController.getShiftState)
+const table4 = {
+  table_number: 4,
+  seats: 2,
+  status: 'available',
+  customers: 0,
+};
 &nbsp;
-router.put('/table', TableController.installCustomers);
-router.post('/order', TableController.createOrder);
-router.post('/checkout', TableController.checkoutTable);
-&nbsp;
-export default router;
-&nbsp;</pre></td></tr></table></pre>
+export { table1, table2, table3, table4 };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

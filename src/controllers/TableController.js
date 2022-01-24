@@ -34,6 +34,7 @@ class TableController {
         });
       }
 
+      console.log(table)
       const updatedTable = await TableService.updateTableStatus(
         table._id,
         'occupied',

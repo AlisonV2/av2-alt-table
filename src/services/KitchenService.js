@@ -1,4 +1,5 @@
 import Dish from '../models/DishModel';
+import Rating from '../models/RatingModel';
 import formatPrice from '../helpers/formatPrice';
 
 class KitchenService {
@@ -72,6 +73,22 @@ class KitchenService {
       await this.updateDishQuantity(dishData.name, dishData.quantity);
     }
     return orderPrice;
+  }
+
+  static async rateDish(shift_id, dish_name, comment, score) {
+    const dish = await this.getDishByName(dish_name);
+    if (!dish) {
+      throw new Error(404);
+    }
+
+    const rating = new Rating({
+      shift_id,
+      dish_name,
+      comment,
+      score,
+    })
+    
+    return rating.save();
   }
 }
 
