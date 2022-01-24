@@ -41,20 +41,17 @@ const createOrder = async (req, res) => {
     }
 
     const table = await Table.findOne({
-      table_number: req.params.table_number,
+      table_number: req.body.table_number,
     });
+
+    console.log(table)
     table.current_bill += orderPrice;
     table.save((err, newTable) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           message: 'Error updating current bill',
         });
-      } else {
-        res.status(200).json({
-          message: 'Current bill updated successfully',
-          table: newTable,
-        });
-      }
+      } 
     });
 
     const order = new Order({
@@ -69,12 +66,12 @@ const createOrder = async (req, res) => {
           message: 'Error creating order',
           error: err.message,
         });
-      } else {
-        res.status(201).json({
-          message: 'Order created successfully',
-          order: newOrder,
-        });
-      }
+      } 
+      
+      res.status(201).json({
+        message: 'Order created successfully',
+        order: newOrder,
+      });
     });
   } catch (err) {
     res.status(400).json({

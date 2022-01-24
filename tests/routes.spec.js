@@ -149,3 +149,22 @@ describe('Testing SeatingPlan routes', () => {
     expect(response.status).toBe(404);
   });
 });
+
+describe('Testing Order routes', () => {
+  test('Should create an order', async () => {
+    const response = await request(app)
+      .post('/api/order')
+      .send({
+        table_number: 1,
+        shift_id: '2022-02-24T10:12:00.005Z',
+        dishes: [
+          {
+            name: 'TestDish',
+            quantity: 1,
+          },
+        ],
+      })
+      .expect(201);
+    expect(response.body.order).toHaveProperty('_id');
+  });
+});
