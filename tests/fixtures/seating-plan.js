@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 import { table1, table2, table3, table4 } from './table';
-import { shift1, shift2, shift3, shift4 } from './shift';
+import { shift1, shift2, shift3, shift4} from './shift';
 
 const id1 = new mongoose.Types.ObjectId();
 const id2 = new mongoose.Types.ObjectId();
 const id3 = new mongoose.Types.ObjectId();
+const id4 = new mongoose.Types.ObjectId();
 
 const seatingPlan1 = {
   _id: id1,
@@ -29,4 +30,5 @@ const seatingPlan4 = {
   tables: [table3, table4],
 };
 
-export { seatingPlan1, seatingPlan2, seatingPlan3, seatingPlan4 };
+
+export { seatingPlan1, seatingPlan2, seatingPlan3, seatingPlan4};

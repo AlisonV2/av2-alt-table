@@ -4,20 +4,6 @@ import KitchenService from '../services/KitchenService';
 import formatPrice from '../helpers/formatPrice';
 
 class TableController {
-  static async getTables(req, res) {
-    try {
-      const tables = await TableService.find();
-      res.status(200).json({
-        message: 'Tables fetched successfully',
-        tables: tables,
-      });
-    } catch (err) {
-      res.status(400).json({
-        message: 'No tables found',
-      });
-    }
-  }
-
   static async installCustomers(req, res) {
     const { shift_id, table_number, customers } = req.body;
     try {

@@ -7,6 +7,7 @@ const tableSchema = new Schema({
         type: Number,
         required: true,
         unique: true,
+        min: 0
     },
     seats: {
         type: Number,

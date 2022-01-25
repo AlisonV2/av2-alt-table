@@ -1,4 +1,6 @@
-# Alt-Table - Alison Vandromme
+![check-code-coverage](https://img.shields.io/badge/code--coverage-96.44%25-brightgreen)
+
+# Alt-Table - Alison Vandromme ![check-code-coverage](https://img.shields.io/badge/code--coverage-96.44%25-brightgreen)
 
 Bordeaux Ynov M1 - Architecture Logicielle (January 2022)
 
