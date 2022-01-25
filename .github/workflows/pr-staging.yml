@@ -14,9 +14,9 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-        env:
-          ALT_TABLE_DB_URL: '${secrets.ALT_TABLE_DB_URL}'
       - run: npm run test
+        env:
+          ALT_TABLE_DB_URL: '${{ secrets.ALT_TABLE_DB_URL }}'
       - name: Tests ✅
         if: ${{ success() }}
         run: |
