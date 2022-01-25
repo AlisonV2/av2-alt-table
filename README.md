@@ -4,10 +4,17 @@
 
 Bordeaux Ynov M1 - Architecture Logicielle (January 2022)
 
-## Application architecture - Current
+## Application architecture
 
-## Application architecture - in 18 months
+<img src="./archi-current.jpg">
 
+
+## Documentation
+
+The documentation is made in OpenAPI 3.0.0 format.
+It is generated from swagger.json file and loaded through [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express).
+
+One the application is running, it can be found on localhost:5000/api/docs.
 ## Workflow
 
 Each feat/* branch is linked to an US on Jira. Keeping the US in the branch name is important for Jira to update the story. 
