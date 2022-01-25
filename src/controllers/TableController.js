@@ -1,28 +1,15 @@
 import TableService from '../services/TableService';
 import ShiftService from '../services/ShiftService';
 import KitchenService from '../services/KitchenService';
+import formatPrice from '../helpers/formatPrice';
 
 class TableController {
-  static async getTables(req, res) {
-    try {
-      const tables = await TableService.find();
-      res.status(200).json({
-        message: 'Tables fetched successfully',
-        tables: tables,
-      });
-    } catch (err) {
-      res.status(400).json({
-        message: 'No tables found',
-      });
-    }
-  }
-
   static async installCustomers(req, res) {
     const { shift_id, table_number, customers } = req.body;
     try {
       await ShiftService.getShift(shift_id);
 
-      const table = TableService.getTableByNumber(table_number);
+      const table = await TableService.getTableByNumber(table_number);
       if (table.status !== 'available') {
         return res.status(400).json({
           message: 'Table is not available',
@@ -34,7 +21,6 @@ class TableController {
         });
       }
 
-      console.log(table)
       const updatedTable = await TableService.updateTableStatus(
         table._id,
         'occupied',

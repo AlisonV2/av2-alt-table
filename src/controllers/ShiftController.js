@@ -35,8 +35,8 @@ class ShiftController {
   static async createShift(req, res) {
     const { shift_id, started_at} = req.body;
     try {
-      const seatingPlan = ShiftService.getSeatingPlan(shift_id);
-      const shift = await ShiftService.createShift(shift_id, started_at)
+      const seatingPlan = await ShiftService.getSeatingPlan(shift_id);
+      const shift = await ShiftService.createShift(shift_id, started_at);
       await TableService.createTables(seatingPlan.tables);
 
       res.status(201).json({

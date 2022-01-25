@@ -8,21 +8,13 @@ class ShiftService {
   static checkTableValidity(tables) {
     const isDuplicated = checkDuplicatedTables(tables);
     const isNegative = checkNegativeNumbers(tables);
-    if (isDuplicated && isNegative) {
+    if (isDuplicated || isNegative) {
       throw new Error('Invalid tables');
     }
   }
 
   static async getShift(shift_id) {
     const shift = Shift.findOne({ shift_id });
-    if (!shift) {
-      throw new Error(404);
-    }
-    return shift;
-  }
-
-  static async getShiftByShiftId(shift_id) {
-    const shift = await Shift.findOne({ shift_id: req.params.shift_id });
     if (!shift) {
       throw new Error(404);
     }
@@ -49,7 +41,7 @@ class ShiftService {
   static async getSeatingPlan(shift_id) {
     const seatingPlan = await SeatingPlan.findOne({ shift_id });
     if (!seatingPlan) {
-      throw new Error(404);
+      throw new Error('Seating plan not found');
     }
     return seatingPlan;
   }

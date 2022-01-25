@@ -64,8 +64,13 @@ class TableService {
       for (let j in orders) {
         orderedDishes = [...orderedDishes, ...orders[j].dishes];
       }
+
       shiftState.push({
-        ...tables[i],
+        table_number: tables[i].table_number,
+        meal_state: tables[i].meal_state,
+        status: tables[i].status,
+        customers: tables[i].customers,
+        current_bill: tables[i].current_bill,
         dishes: orderedDishes,
       });
     }

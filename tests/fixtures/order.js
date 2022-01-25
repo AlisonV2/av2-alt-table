@@ -12,6 +12,7 @@ const order1 = {
   table_number: 1,
   shift_id: shift1.shift_id,
   dishes: [dish1, dish2, dish3],
+  bill: 129.99,
   bill_paid: false,
 };
 
@@ -28,6 +29,7 @@ const order3 = {
   table_number: 1,
   shift_id: shift1.shift_id,
   dishes: [dish1, dish2, dish3],
+  bill: 99.90,
   bill_paid: false,
 };
 
@@ -35,6 +37,7 @@ const order4 = {
   table_number: 1,
   shift_id: shift3.shift_id,
   dishes: [dish1, dish2],
+  bill: 29.99,
   bill_paid: false,
 };
 
