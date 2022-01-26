@@ -216,9 +216,8 @@ describe('Testing Shift routes', () => {
   test('Create a new shift after seating plan creation', async () => {
     await request(app)
       .post('/api/shift')
-      .send({...shift4})
+      .send({ ...shift4 })
       .expect(400);
-
   });
 
   test('Create a new shift should not allow duplicated shift', async () => {
@@ -252,6 +251,7 @@ describe('Testing rating routes', () => {
       .send({
         shift_id: '2022-01-24T10:12:00.005Z',
         dish_name: 'TestDish2',
+        table_number: 1,
         score: 5,
         comment: "I'm a comment",
       })

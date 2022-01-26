@@ -60,9 +60,9 @@ class KitchenController {
   }
 
   static async rateDish(req, res) {
-    const { shift_id, dish_name, comment, score } = req.body;
+    const { shift_id, dish_name, table_number, comment, score } = req.body;
     try {
-      const newRating = await KitchenService.rateDish(shift_id, dish_name, comment, score);
+      const newRating = await KitchenService.rateDish(shift_id, dish_name, table_number, comment, score);
       res.status(201).json({
         message: 'Rating created successfully',
         rating: newRating,
