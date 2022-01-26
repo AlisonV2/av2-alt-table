@@ -3,7 +3,6 @@ import Rating from '../models/RatingModel';
 import formatPrice from '../helpers/formatPrice';
 
 class KitchenService {
-
   static async getDishes() {
     return Dish.find();
   }
@@ -13,7 +12,11 @@ class KitchenService {
   }
 
   static async getDishByName(name) {
-    return Dish.findOne({ name });
+    const dish = await Dish.findOne({ name });
+    if (!dish) {
+      throw new Error('Dish not found');
+    }
+    return dish;
   }
 
   static async createDish(dish) {
@@ -32,24 +35,15 @@ class KitchenService {
   static async updateDishQuantity(name, quantity) {
     const dish = await Dish.findOne({ name });
     if (!dish) {
-      throw new Error(404);
+      throw new Error('Dish not found');
     }
     dish.quantity = quantity;
     return dish.save();
   }
 
-  static async getDishByName(name) {
-    const dish = await Dish.findOne({ name });
-    if (!dish) {
-      throw new Error(404);
-    }
-    return dish;
-  }
-
   static async checkDishesForStock(dishes = []) {
     for (let i in dishes) {
       const dishData = await this.getDishByName(dishes[i].name);
-
       if (dishData.quantity === 0) {
         throw new Error('Dish is out of stock');
       }
@@ -75,20 +69,22 @@ class KitchenService {
     return orderPrice;
   }
 
-  static async rateDish(shift_id, dish_name, comment, score) {
-    const dish = await this.getDishByName(dish_name);
-    if (!dish) {
-      throw new Error(404);
-    }
+  static async rateDish(shift_id, dish_name, table_number, comment, score) {
+    await this.getDishByName(dish_name);
 
     const rating = new Rating({
       shift_id,
       dish_name,
+      table_number,
       comment,
       score,
-    })
-    
+    });
+
     return rating.save();
+  }
+
+  static async getShiftRatings(shift_id, table_number) {
+    return Rating.find({ shift_id, table_number });
   }
 }
 

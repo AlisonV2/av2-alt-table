@@ -16,7 +16,7 @@ class ShiftService {
   static async getShift(shift_id) {
     const shift = Shift.findOne({ shift_id });
     if (!shift) {
-      throw new Error(404);
+      throw new Error('No shift found');
     }
     return shift;
   }
@@ -55,10 +55,11 @@ class ShiftService {
       { useFindAndModify: false, new: false }
     );
     if (!seatingPlan) {
-      throw new Error(404);
+      throw new Error('Seating plan not found');
     }
     return seatingPlan;
   }
+
 }
 
 export default ShiftService;

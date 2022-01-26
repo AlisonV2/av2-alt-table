@@ -17,7 +17,7 @@ class TableService {
   static async getTableByNumber(table_number) {
     const table = await Table.findOne({ table_number });
     if (!table) {
-      throw new Error(404);
+      throw new Error('Table not found');
     }
     return table;
   }
@@ -33,17 +33,19 @@ class TableService {
   static async updateTableBill(id, bill) {
     return Table.findByIdAndUpdate(
       id,
-      { bill },
+      { current_bill: bill },
       { useFindAndModify: false, new: false }
     );
   }
 
-  static async createOrder(shift_id, table_number, dishes = []) {
+  static async createOrder(shift_id, table_number, bill, dishes = []) {
     const order = new Order({
       shift_id,
       table_number,
+      bill,
       dishes,
     });
+    console.log(order)
     return order.save();
   }
 
@@ -55,9 +57,9 @@ class TableService {
     });
   }
 
-  static async getOrderedDishes(shift_id, tables) {
+  static async getTablesState(shift_id, tables) {
     let orderedDishes = [];
-    let shiftState = [];
+    let tablesState = [];
 
     for (let i in tables) {
       const orders = await this.getOrders(shift_id, tables[i].table_number);
@@ -65,7 +67,7 @@ class TableService {
         orderedDishes = [...orderedDishes, ...orders[j].dishes];
       }
 
-      shiftState.push({
+      tablesState.push({
         table_number: tables[i].table_number,
         meal_state: tables[i].meal_state,
         status: tables[i].status,
@@ -74,7 +76,7 @@ class TableService {
         dishes: orderedDishes,
       });
     }
-    return shiftState;
+    return tablesState;
   }
 
   static async payOrdersBills(shift_id, table_number, tip) {
