@@ -1,6 +1,4 @@
-![check-code-coverage](https://img.shields.io/badge/code--coverage-96.44%25-brightgreen)
-
-# Alt-Table - Alison Vandromme ![check-code-coverage](https://img.shields.io/badge/code--coverage-96.44%25-brightgreen)
+# Alt-Table - Alison Vandromme ![check-code-coverage](https://img.shields.io/badge/code--coverage-96.88%25-brightgreen)
 
 Bordeaux Ynov M1 - Architecture Logicielle (January 2022)
 
@@ -17,6 +15,10 @@ The main goal of the application is to assist a restaurant's staff in service ma
 - Orders can be made, with dish quantity and comments. 
 - Dishes can be rated
 - The shift state is available with tables' current state, orders and ratings made.
+
+### Stack
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" /> <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /> <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" /> <img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" />
 
 ## Application architecture
 
