@@ -10,7 +10,7 @@ class KitchenController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error while fetching dishes',
+        message: err.message,
       });
     }
   }
@@ -24,7 +24,7 @@ class KitchenController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'No menu found',
+        message: err.message,
       });
     }
   }

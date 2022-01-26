@@ -12,7 +12,7 @@ class ShiftController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error creating seating plan',
+        message: err.message,
       });
     }
   }
@@ -27,7 +27,7 @@ class ShiftController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error updating seating plan',
+        message: err.message,
       });
     }
   }
@@ -55,11 +55,11 @@ class ShiftController {
     const shift_id = req.params.shift_id;
     try {
       const tables = await TableService.getTables();
-      const shiftState = await TableService.getOrderedDishes(shift_id, tables);
+      const tablesState = await TableService.getTablesState(shift_id, tables);
       
       res.status(200).json({
         message: 'Current state of the shift',
-        state: shiftState
+        state: tablesState
       });
 
     } catch (err) {

@@ -32,7 +32,7 @@ class KitchenService {
   static async updateDishQuantity(name, quantity) {
     const dish = await Dish.findOne({ name });
     if (!dish) {
-      throw new Error(404);
+      throw new Error('Dish not found');
     }
     dish.quantity = quantity;
     return dish.save();
@@ -41,7 +41,7 @@ class KitchenService {
   static async getDishByName(name) {
     const dish = await Dish.findOne({ name });
     if (!dish) {
-      throw new Error(404);
+      throw new Error('Dish not found');
     }
     return dish;
   }
@@ -49,7 +49,6 @@ class KitchenService {
   static async checkDishesForStock(dishes = []) {
     for (let i in dishes) {
       const dishData = await this.getDishByName(dishes[i].name);
-
       if (dishData.quantity === 0) {
         throw new Error('Dish is out of stock');
       }
@@ -78,7 +77,7 @@ class KitchenService {
   static async rateDish(shift_id, dish_name, comment, score) {
     const dish = await this.getDishByName(dish_name);
     if (!dish) {
-      throw new Error(404);
+      throw new Error('Dish not found');
     }
 
     const rating = new Rating({

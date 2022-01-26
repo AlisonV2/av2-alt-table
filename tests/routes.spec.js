@@ -208,7 +208,7 @@ describe('Testing Order routes', () => {
 
   test('Create an order should throw an error', async () => {
     const response = await request(app).post('/api/order').send().expect(400);
-    expect(response.body.message).toBe('Error creating order');
+    expect(response.body.message).toBe('Table not found');
   });
 });
 

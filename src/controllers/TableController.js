@@ -32,16 +32,16 @@ class TableController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error installing customers',
+        message: err.message,
       });
     }
   }
 
   static async createOrder(req, res) {
     const { shift_id, table_number, dishes } = req.body;
-
     try {
       const tableData = await TableService.getTableByNumber(table_number);
+      console.log(tableData)
       if (tableData.status !== 'occupied') {
         return res.status(400).json({
           message: 'Table has not been setup yet',
@@ -49,15 +49,16 @@ class TableController {
       }
 
       await KitchenService.checkDishesForStock(dishes);
-      const orderPrice = KitchenService.getOrderPrice(dishes);
-
+      const orderPrice = await KitchenService.getOrderPrice(dishes);
       const table = await TableService.getTableByNumber(table_number);
+
       table.current_bill += orderPrice;
       await TableService.updateTableBill(table._id, table.current_bill);
 
       const order = await TableService.createOrder(
         shift_id,
         table_number,
+        orderPrice,
         dishes
       );
       res.status(201).json({
@@ -66,7 +67,7 @@ class TableController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error creating order',
+        message: err.message,
       });
     }
   }
@@ -89,7 +90,7 @@ class TableController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error checking out',
+        message: err.message,
       });
     }
   }

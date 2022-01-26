@@ -282,7 +282,7 @@
     "/shift/{shift_id}": {
       "get": {
         "tags": ["shift"],
-        "summary": "Get a shift by its id",
+        "summary": "Get a shift state",
         "description": "Returns a shift",
         "parameters": [
           {
@@ -300,7 +300,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeatingPlan"
+                  "$ref": "#/components/schemas/Shift"
                 }
               }
             }
