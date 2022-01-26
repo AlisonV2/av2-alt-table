@@ -7,6 +7,11 @@ const ratingSchema = new Schema({
     type: String,
     required: true,
   },
+  table_number: {
+    type: Number,
+    required: true,
+    min: 0
+  },
   dish_name: {
     type: String,
     required: true,

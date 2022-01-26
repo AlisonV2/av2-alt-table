@@ -1,5 +1,6 @@
 import ShiftService from '../services/ShiftService';
 import TableService from '../services/TableService';
+import KitchenService from '../services/KitchenService';
 
 class ShiftController {
   static async createSeatingPlan(req, res) {
@@ -12,7 +13,7 @@ class ShiftController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error creating seating plan',
+        message: err.message,
       });
     }
   }
@@ -27,7 +28,7 @@ class ShiftController {
       });
     } catch (err) {
       res.status(400).json({
-        message: 'Error updating seating plan',
+        message: err.message,
       });
     }
   }
@@ -55,8 +56,17 @@ class ShiftController {
     const shift_id = req.params.shift_id;
     try {
       const tables = await TableService.getTables();
-      const shiftState = await TableService.getOrderedDishes(shift_id, tables);
+      const tablesState = await TableService.getTablesState(shift_id, tables);
       
+      let shiftState = [];
+      
+      for (let i in tablesState) {
+        const ratings = await KitchenService.getShiftRatings(shift_id, tablesState[i].table_number);
+        shiftState.push({
+          ...tablesState[i],
+          ratings: ratings,
+        });
+      }
       res.status(200).json({
         message: 'Current state of the shift',
         state: shiftState
