@@ -45,7 +45,6 @@ class TableService {
       bill,
       dishes,
     });
-    console.log(order)
     return order.save();
   }
 

@@ -41,7 +41,6 @@ class TableController {
     const { shift_id, table_number, dishes } = req.body;
     try {
       const tableData = await TableService.getTableByNumber(table_number);
-      console.log(tableData)
       if (tableData.status !== 'occupied') {
         return res.status(400).json({
           message: 'Table has not been setup yet',
